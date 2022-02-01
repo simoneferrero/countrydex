@@ -11,3 +11,18 @@
   height: 100%;
   width: 100%;
 }
+
+.geography {
+  fill: var(--medium);
+  stroke: var(--very-light);
+  stroke-width: 0.4;
+  outline: none;
+}
+
+.geography:hover {
+  fill: var(--light);
+}
+
+.selectedCountry {
+  fill: var(--light);
+}
