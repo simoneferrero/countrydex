@@ -1,0 +1,23 @@
+.header {
+  height: 4rem;
+  background-color: var(--medium);
+  color: var(--very-light);
+  display: grid;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  z-index: 1;
+}
+
+.authBox {
+  text-align: right;
+}
+
+.userGreeting {
+  margin: 0;
+}
