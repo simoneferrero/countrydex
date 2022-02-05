@@ -12,11 +12,13 @@ const Header = () => {
           <p className={styles.userGreeting}>
             Welcome, {user.given_name || user.nickname}.
           </p>
+          {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
           <a href="/api/auth/logout">Logout</a>
         </div>
       ) : (
         <div className={styles.authBox}>
           <p className={styles.userGreeting}>Hello, stranger.</p>
+          {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
           <a href="/api/auth/login">Login</a>{" "}
         </div>
       )}

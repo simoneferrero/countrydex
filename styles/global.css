@@ -1,12 +1,47 @@
 /* Variables */
 :root {
+  --very-light: #e1d8c8;
+  --light: #dcba82;
+  --medium: #a88e63;
+  --dark: #5c5852;
+  --very-dark: #5c4d36;
+}
+/* :root {
+  --very-light: #dcba82;
+  --light: #c3a374;
+  --medium: #a47a3c;
+  --dark: #9c6439;
+  --very-dark: #77552f;
+} */
+/* :root {
+  --very-light: #f1de97;
+  --light: #c6b97b;
+  --medium: #76723b;
+  --dark: #5e4930;
+  --very-dark: #37320f;
+} */
+/* :root {
+  --very-light: #f1de97;
+  --light: #eed77e;
+  --medium: #9d8114;
+  --dark: #5e4d0c;
+  --very-dark: #3f3308;
+} */
+/* :root {
+  --very-light: #e6e2d2;
+  --light: #eee5c0;
+  --medium: #aa9966;
+  --dark: #887744;
+  --very-dark: #776600;
+} */
+/* :root {
   --very-light: #e4e5e6;
   --light: #36454f;
   --medium-light: #2b373f;
   --medium: #20292f;
-  --medium-dark: #161c20;
-  --dark: #0b0e10;
-}
+  --dark: #161c20;
+  --very-dark: #0b0e10;
+} */
 
 /* Base styles */
 html,
@@ -15,7 +50,7 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  background-color: var(--light);
+  background-color: var(--very-light);
 }
 
 * {

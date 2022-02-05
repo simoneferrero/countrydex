@@ -1,6 +1,6 @@
 .header {
   height: 4rem;
-  background-color: var(--medium);
+  background-color: var(--dark);
   color: var(--very-light);
   display: grid;
   position: fixed;
