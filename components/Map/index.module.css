@@ -28,6 +28,7 @@
   stroke-width: 0.4;
   outline: none;
   cursor: pointer;
+  transition: opacity 0.5s ease-in-out;
 }
 
 .geography:hover {
@@ -40,4 +41,15 @@
 
 .unfocusedCountry {
   opacity: 0.7;
+}
+
+.bronze {
+  fill: var(--single);
+}
+
+.silver {
+  fill: var(--double);
+}
+.gold {
+  fill: var(--triple);
 }

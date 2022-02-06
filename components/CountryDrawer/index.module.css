@@ -1,0 +1,15 @@
+.drawer {
+  position: absolute;
+  top: 6rem;
+  right: -20rem;
+  height: 20rem;
+  width: 20rem;
+  background-color: var(--very-dark);
+  color: var(--very-light);
+  transition: right 0.5s ease-in-out;
+  padding: 0 1rem;
+}
+
+.open {
+  right: 0;
+}

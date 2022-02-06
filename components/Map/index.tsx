@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+import { Countries, Country, UserCountries } from "types/Countries";
+
+import { useState } from "react";
 import {
   ComposableMap,
   Geographies,
@@ -7,33 +9,10 @@ import {
   Sphere,
   ZoomableGroup,
 } from "react-simple-maps";
-import axios from "axios";
 
-import classnames from "classnames";
+import classNames from "classnames";
 import styles from "./index.module.css";
 
-const geoUrl =
-  "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
-
-interface Country {
-  ABBREV: string;
-  CONTINENT: string;
-  FORMAL_EN: string;
-  GDP_MD_EST: number;
-  GDP_YEAR: number;
-  ISO_A2: string;
-  ISO_A3: string;
-  NAME: string;
-  NAME_LONG: string;
-  POP_EST: number;
-  POP_RANK: number;
-  POP_YEAR: number;
-  REGION_UN: string;
-  SUBREGION: string;
-}
-interface Countries {
-  [key: string]: Country;
-}
 interface Geography {
   geometry: any;
   rsmKey: string;
@@ -41,28 +20,21 @@ interface Geography {
   type: string;
   properties: Country;
 }
-const Map = () => {
-  const [countryList, setCountryList] = useState<Countries>({});
-  const [selectedCountry, setSelectedCountry] = useState("");
+interface Props {
+  countryList: Countries;
+  geoUrl: string;
+  selectedCountry: string;
+  onCountryClick: (country: string) => void;
+  userCountries: UserCountries;
+}
+const Map = ({
+  countryList,
+  geoUrl,
+  selectedCountry,
+  onCountryClick,
+  userCountries,
+}: Props) => {
   const [hoveredCountry, setHoveredCountry] = useState("");
-
-  useEffect(() => {
-    const getCountryData = async () => {
-      const response = await axios(geoUrl);
-
-      setCountryList(
-        response.data.objects.ne_110m_admin_0_countries.geometries.reduce(
-          (countries: any, { properties }: { properties: Country }) => ({
-            ...countries,
-            [properties.ISO_A3]: properties,
-          }),
-          {}
-        )
-      );
-    };
-
-    getCountryData();
-  }, []);
 
   return (
     <div className={styles.mapContainer}>
@@ -79,33 +51,34 @@ const Map = () => {
           />
           <Graticule stroke="#5c4d36" strokeWidth={0.3} />
           <Geographies geography={geoUrl}>
-            {({ geographies }) =>
-              geographies.map((geo: Geography) => {
+            {({ geographies }) => {
+              return geographies.map((geo: Geography) => {
                 const { rsmKey, properties } = geo;
+                const userCountryAchievements = Object.values(
+                  userCountries[properties.ISO_A3] ?? {}
+                ).filter(Boolean).length;
+
                 return (
                   <Geography
                     key={rsmKey}
                     geography={geo}
-                    className={classnames(styles.geography, {
+                    className={classNames(styles.geography, {
                       [styles.selectedCountry]:
                         selectedCountry === properties.ISO_A3,
                       [styles.unfocusedCountry]:
                         selectedCountry &&
                         selectedCountry !== properties.ISO_A3,
+                      [styles.bronze]: userCountryAchievements === 1,
+                      [styles.silver]: userCountryAchievements === 2,
+                      [styles.gold]: userCountryAchievements === 3,
                     })}
-                    onClick={() =>
-                      setSelectedCountry((prevCountry) =>
-                        prevCountry === properties.ISO_A3
-                          ? ""
-                          : properties.ISO_A3
-                      )
-                    }
+                    onClick={() => onCountryClick(properties.ISO_A3)}
                     onMouseOver={() => setHoveredCountry(properties.ISO_A3)}
                     onMouseOut={() => setHoveredCountry("")}
                   />
                 );
-              })
-            }
+              });
+            }}
           </Geographies>
         </ZoomableGroup>
       </ComposableMap>
