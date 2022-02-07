@@ -10,6 +10,8 @@ import {
   ZoomableGroup,
 } from "react-simple-maps";
 
+import { SFW_ACHIEVEMENTS, BOOTY_ACHIEVEMENTS } from "constants/achievements";
+
 import classNames from "classnames";
 import styles from "./index.module.css";
 
@@ -23,13 +25,16 @@ interface Geography {
 interface Props {
   countryList: Countries;
   geoUrl: string;
-  selectedCountry: string;
+  isBootyMode: boolean;
   onCountryClick: (country: string) => void;
+  selectedCountry: string;
   userCountries: UserCountries;
 }
+
 const Map = ({
   countryList,
   geoUrl,
+  isBootyMode,
   selectedCountry,
   onCountryClick,
   userCountries,
@@ -54,9 +59,15 @@ const Map = ({
             {({ geographies }) => {
               return geographies.map((geo: Geography) => {
                 const { rsmKey, properties } = geo;
-                const userCountryAchievements = Object.values(
+                const userCountryAchievements = Object.keys(
                   userCountries[properties.ISO_A3] ?? {}
-                ).filter(Boolean).length;
+                ).filter(
+                  (value) =>
+                    Object.keys(
+                      isBootyMode ? BOOTY_ACHIEVEMENTS : SFW_ACHIEVEMENTS
+                    ).includes(value) &&
+                    !!userCountries[properties.ISO_A3][value]
+                ).length;
 
                 return (
                   <Geography
@@ -68,9 +79,12 @@ const Map = ({
                       [styles.unfocusedCountry]:
                         selectedCountry &&
                         selectedCountry !== properties.ISO_A3,
-                      [styles.bronze]: userCountryAchievements === 1,
-                      [styles.silver]: userCountryAchievements === 2,
-                      [styles.gold]: userCountryAchievements === 3,
+                      [styles.bronze]:
+                        !isBootyMode && userCountryAchievements === 1,
+                      [styles.silver]:
+                        userCountryAchievements === (isBootyMode ? 1 : 2),
+                      [styles.gold]:
+                        userCountryAchievements === (isBootyMode ? 2 : 3),
                     })}
                     onClick={() => onCountryClick(properties.ISO_A3)}
                     onMouseOver={() => setHoveredCountry(properties.ISO_A3)}

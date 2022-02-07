@@ -18,6 +18,25 @@
   text-align: right;
 }
 
+.loggedIn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .userGreeting {
   margin: 0;
+  margin-left: 2rem;
+}
+
+.sfwIcon {
+  position: absolute;
+  top: 2px;
+  right: 4px;
+}
+
+.bootyIcon {
+  position: absolute;
+  top: 2px;
+  left: 4px;
 }

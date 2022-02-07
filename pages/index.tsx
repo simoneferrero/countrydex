@@ -17,6 +17,7 @@ const Home = () => {
   const [countryList, setCountryList] = useState<Countries>({});
   const [userCountries, setUserCountries] = useState<UserCountries>({});
   const [selectedCountry, setSelectedCountry] = useState("");
+  const [isBootyMode, setIsBootyMode] = useState(false);
   const { user } = useUser();
 
   useEffect(() => {
@@ -67,14 +68,6 @@ const Home = () => {
       );
     }
 
-    const updatedUserCountries = {
-      ...userCountries,
-      [countryId]: {
-        ...userCountries[countryId],
-        [achievementId]: !userCountries?.[countryId]?.[achievementId],
-      },
-    };
-
     setUserCountries((prevUserCountries: UserCountries) => ({
       ...prevUserCountries,
       [countryId]: {
@@ -95,12 +88,17 @@ const Home = () => {
   return (
     <div className={styles.container}>
       <main>
-        <Header />
+        <Header
+          isBootyMode={isBootyMode}
+          setIsBootyMode={setIsBootyMode}
+          userName={user?.name || user?.nickname}
+        />
         <Map
           countryList={countryList}
           geoUrl={geoUrl}
-          selectedCountry={selectedCountry}
+          isBootyMode={isBootyMode}
           onCountryClick={handleCountryClick}
+          selectedCountry={selectedCountry}
           userCountries={userCountries}
         />
         {!user && (
@@ -112,6 +110,7 @@ const Home = () => {
       <CountryDrawer
         country={selectedCountryWithAchievements}
         onAchievementChange={handleAchievementChange}
+        isBootyMode={isBootyMode}
       />
     </div>
   );

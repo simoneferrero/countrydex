@@ -1,29 +1,45 @@
 import { useUser } from "@auth0/nextjs-auth0";
 
+import Switch from "react-switch";
+
 import styles from "./index.module.css";
 
-const Header = () => {
-  const { user } = useUser();
-  return (
-    <header className={styles.header}>
-      <h1>COUNTRYDEX</h1>
-      {user ? (
+interface Props {
+  isBootyMode: boolean;
+  setIsBootyMode: (isBootyMode: boolean) => void;
+  userName?: string | null;
+}
+
+const Header = ({ isBootyMode, setIsBootyMode, userName }: Props) => (
+  <header className={styles.header}>
+    <h1>{isBootyMode ? "BOOTYDEX" : "COUNTRYDEX"}</h1>
+    {userName ? (
+      <div className={styles.loggedIn}>
+        <Switch
+          aria-label="Booty Mode Toggle"
+          onChange={setIsBootyMode}
+          checked={isBootyMode}
+          onColor="#dcba82"
+          offColor="#a88e63"
+          onHandleColor="#e1d8c8"
+          offHandleColor="#e1d8c8"
+          checkedIcon={<span className={styles.bootyIcon}>💖</span>}
+          uncheckedIcon={<span className={styles.sfwIcon}>☀️</span>}
+        />
         <div className={styles.authBox}>
-          <p className={styles.userGreeting}>
-            Welcome, {user.given_name || user.nickname}.
-          </p>
+          <p className={styles.userGreeting}>Welcome, {userName}.</p>
           {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
           <a href="/api/auth/logout">Logout</a>
         </div>
-      ) : (
-        <div className={styles.authBox}>
-          <p className={styles.userGreeting}>Hello, stranger.</p>
-          {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-          <a href="/api/auth/login">Login</a>{" "}
-        </div>
-      )}
-    </header>
-  );
-};
+      </div>
+    ) : (
+      <div className={styles.authBox}>
+        <p className={styles.userGreeting}>Hello, stranger.</p>
+        {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+        <a href="/api/auth/login">Login</a>{" "}
+      </div>
+    )}
+  </header>
+);
 
 export default Header;
