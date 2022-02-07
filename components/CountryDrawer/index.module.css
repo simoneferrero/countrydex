@@ -2,14 +2,28 @@
   position: absolute;
   top: 6rem;
   right: -20rem;
-  height: 20rem;
   width: 20rem;
   background-color: var(--very-dark);
   color: var(--very-light);
   transition: right 0.5s ease-in-out;
-  padding: 0 1rem;
+  padding: 1rem;
+}
+
+.drawer h3 {
+  margin: 0;
+  margin-bottom: 1rem;
 }
 
 .open {
   right: 0;
+}
+
+.achievements label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.achievements label span {
+  margin-left: 1rem;
 }

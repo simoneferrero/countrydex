@@ -1,5 +1,7 @@
 import { UserCountry } from "types/Countries";
 
+import AchievementSwitch from "./AchievementSwitch";
+
 import classNames from "classnames";
 
 import styles from "./index.module.css";
@@ -27,36 +29,21 @@ const CountryDrawer = ({ country, onAchievementChange }: Props) => {
       <h3>{country?.name ?? "No country selected"}</h3>
       {!!country && (
         <form className={styles.achievements}>
-          <p>
-            <input
-              type="checkbox"
-              id="visit"
-              name="visit"
-              checked={country?.achievements[VISIT] ?? false}
-              onChange={() => onAchievementChange(country?.id, VISIT)}
-            />{" "}
-            Visit {country?.name}
-          </p>
-          <p>
-            <input
-              type="checkbox"
-              id="eat"
-              name="eat"
-              checked={country?.achievements[EAT] ?? false}
-              onChange={() => onAchievementChange(country?.id, EAT)}
-            />{" "}
-            Eat food from {country?.name}
-          </p>
-          <p>
-            <input
-              type="checkbox"
-              id="know"
-              name="know"
-              checked={country?.achievements[KNOW] ?? false}
-              onChange={() => onAchievementChange(country?.id, KNOW)}
-            />{" "}
-            Know someone from {country?.name}
-          </p>
+          <AchievementSwitch
+            checked={country?.achievements[VISIT]}
+            onChange={() => onAchievementChange(country?.id, VISIT)}
+            labelText={`Visit ${country?.name}`}
+          />
+          <AchievementSwitch
+            checked={country?.achievements[EAT]}
+            onChange={() => onAchievementChange(country?.id, EAT)}
+            labelText={`Eat food from ${country?.name}`}
+          />
+          <AchievementSwitch
+            checked={country?.achievements[KNOW]}
+            onChange={() => onAchievementChange(country?.id, KNOW)}
+            labelText={`Know someone from ${country?.name}`}
+          />
         </form>
       )}
     </div>
