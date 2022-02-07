@@ -1,4 +1,4 @@
-import { Countries, Country, UserCountries } from "types/Countries";
+import type { Countries, Country, UserCountries } from "types/Countries";
 
 import { useState, useEffect } from "react";
 import { useUser } from "@auth0/nextjs-auth0";
@@ -8,21 +8,39 @@ import Header from "@/components/Header";
 import Map from "@/components/Map";
 import CountryDrawer from "@/components/CountryDrawer";
 
-import styles from "./index.module.css";
+import styled from "styled-components";
 
-const geoUrl =
-  "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
+const GEO_URL = process.env.NEXT_PUBLIC_GEO_URL || "";
+
+const StyledContainer = styled.div`
+  margin-top: 4rem;
+  max-height: calc(100vh - 4rem);
+  overflow-y: hidden;
+  padding: 0 3rem;
+`;
+
+const StyledLoginPrompt = styled.div`
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: ${({ theme }) => theme.colors["very-light"]};
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+`;
 
 const Home = () => {
   const [countryList, setCountryList] = useState<Countries>({});
   const [userCountries, setUserCountries] = useState<UserCountries>({});
   const [selectedCountry, setSelectedCountry] = useState("");
-  const [isBootyMode, setIsBootyMode] = useState(false);
   const { user } = useUser();
 
   useEffect(() => {
     const getCountryData = async () => {
-      const response = await axios(geoUrl);
+      const response = await axios(GEO_URL);
 
       setCountryList(
         response.data.objects.ne_110m_admin_0_countries.geometries.reduce(
@@ -86,33 +104,30 @@ const Home = () => {
     : undefined;
 
   return (
-    <div className={styles.container}>
+    <StyledContainer>
       <main>
-        <Header
-          isBootyMode={isBootyMode}
-          setIsBootyMode={setIsBootyMode}
-          userName={user?.name || user?.nickname}
-        />
+        <Header userName={user?.name || user?.nickname} />
         <Map
           countryList={countryList}
-          geoUrl={geoUrl}
-          isBootyMode={isBootyMode}
+          geoUrl={GEO_URL}
           onCountryClick={handleCountryClick}
           selectedCountry={selectedCountry}
           userCountries={userCountries}
         />
         {!user && (
-          <div className={styles.loginPrompt}>
-            <h2>Login to save your achievements!</h2>
-          </div>
+          <StyledLoginPrompt>
+            <h2>
+              {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+              <a href="/api/auth/login">Login</a> to save your achievements!
+            </h2>
+          </StyledLoginPrompt>
         )}
       </main>
       <CountryDrawer
         country={selectedCountryWithAchievements}
         onAchievementChange={handleAchievementChange}
-        isBootyMode={isBootyMode}
       />
-    </div>
+    </StyledContainer>
   );
 };
 

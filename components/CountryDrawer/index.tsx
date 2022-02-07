@@ -1,63 +1,63 @@
+import { Achievements } from "types/Achievements";
 import { UserCountry } from "types/Countries";
+
+import { useAppSelector } from "app/hooks";
+import { selectIsBootyMode } from "features/theme/themeSlice";
 
 import AchievementSwitch from "./AchievementSwitch";
 
 import { SFW_ACHIEVEMENTS, BOOTY_ACHIEVEMENTS } from "constants/achievements";
 
-import classNames from "classnames";
+import styled from "styled-components";
 
-import styles from "./index.module.css";
+export const StyledDrawer = styled.div`
+  background-color: ${({ theme }) => theme.colors["very-dark"]};
+  color: ${({ theme }) => theme.colors["very-light"]};
+  padding: 1rem;
+  position: absolute;
+  right: ${({ isOpen }: { isOpen: boolean }) => (isOpen ? "0" : "-20rem")};
+  top: 6rem;
+  transition: right 0.5s ease-in-out;
+  width: 20rem;
+
+  h3 {
+    margin: 0;
+    margin-bottom: 1rem;
+  }
+`;
 
 interface Props {
   country?: {
-    name: string;
-    id: string;
     achievements: UserCountry;
+    id: string;
+    name: string;
   };
-  isBootyMode: boolean;
   onAchievementChange: (country: string, achievement: string) => void;
 }
 
-const CountryDrawer = ({
-  country,
-  isBootyMode,
-  onAchievementChange,
-}: Props) => {
-  const drawerStyles = classNames(styles.drawer, {
-    [styles.open]: !!country,
-  });
+const CountryDrawer = ({ country, onAchievementChange }: Props) => {
+  const isBootyMode = useAppSelector(selectIsBootyMode);
 
-  const sfwAchievementList = Object.values(SFW_ACHIEVEMENTS).map(
-    ({ id, text }) => (
+  const getAchievementList = (achievements: Achievements) =>
+    Object.values(achievements).map(({ id, text }) => (
       <AchievementSwitch
-        key={id}
         checked={country?.achievements[id]}
-        onChange={() => onAchievementChange(country?.id || "", id)}
+        key={id}
         labelText={text + country?.name}
+        onChange={() => onAchievementChange(country?.id || "", id)}
       />
-    )
-  );
+    ));
 
-  const bootyAchievementList = Object.values(BOOTY_ACHIEVEMENTS).map(
-    ({ id, text }) => (
-      <AchievementSwitch
-        key={id}
-        checked={country?.achievements[id]}
-        onChange={() => onAchievementChange(country?.id || "", id)}
-        labelText={text + country?.name}
-      />
-    )
-  );
+  const sfwAchievementList = getAchievementList(SFW_ACHIEVEMENTS);
+  const bootyAchievementList = getAchievementList(BOOTY_ACHIEVEMENTS);
 
   return (
-    <div className={drawerStyles}>
+    <StyledDrawer isOpen={!!country}>
       <h3>{country?.name ?? "No country selected"}</h3>
       {!!country && (
-        <form className={styles.achievements}>
-          {isBootyMode ? bootyAchievementList : sfwAchievementList}
-        </form>
+        <form>{isBootyMode ? bootyAchievementList : sfwAchievementList}</form>
       )}
-    </div>
+    </StyledDrawer>
   );
 };
 

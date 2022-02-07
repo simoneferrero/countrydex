@@ -1,10 +1,14 @@
-import { Countries, Country, UserCountries } from "types/Countries";
+import type { Countries, Country, UserCountries } from "types/Countries";
 
 import { useState } from "react";
+import { useTheme } from "styled-components";
+
+import { useAppSelector } from "app/hooks";
+import { selectIsBootyMode } from "features/theme/themeSlice";
+
 import {
   ComposableMap,
   Geographies,
-  Geography,
   Graticule,
   Sphere,
   ZoomableGroup,
@@ -12,20 +16,18 @@ import {
 
 import { SFW_ACHIEVEMENTS, BOOTY_ACHIEVEMENTS } from "constants/achievements";
 
-import classNames from "classnames";
-import styles from "./index.module.css";
+import { StyledMapContainer, StyledGeography } from "./styled";
 
 interface Geography {
   geometry: any;
+  properties: Country;
   rsmKey: string;
   svgPath: string;
   type: string;
-  properties: Country;
 }
 interface Props {
   countryList: Countries;
   geoUrl: string;
-  isBootyMode: boolean;
   onCountryClick: (country: string) => void;
   selectedCountry: string;
   userCountries: UserCountries;
@@ -34,69 +36,60 @@ interface Props {
 const Map = ({
   countryList,
   geoUrl,
-  isBootyMode,
-  selectedCountry,
   onCountryClick,
+  selectedCountry,
   userCountries,
 }: Props) => {
   const [hoveredCountry, setHoveredCountry] = useState("");
+  const isBootyMode = useAppSelector(selectIsBootyMode);
+  const theme = useTheme();
 
   return (
-    <div className={styles.mapContainer}>
-      <h2 className={styles.countryName}>
-        {countryList[hoveredCountry]?.NAME ?? ""}
-      </h2>
+    <StyledMapContainer>
+      <h2>{countryList[hoveredCountry]?.NAME ?? ""}</h2>
       <ComposableMap>
         <ZoomableGroup zoom={1}>
           <Sphere
-            id="rsm-sphere"
-            stroke="#5c4d36"
-            strokeWidth={0.3}
             fill="transparent"
+            id="rsm-sphere"
+            stroke={theme.colors["very-dark"]}
+            strokeWidth={0.3}
           />
-          <Graticule stroke="#5c4d36" strokeWidth={0.3} />
+          <Graticule stroke={theme.colors["very-dark"]} strokeWidth={0.3} />
           <Geographies geography={geoUrl}>
-            {({ geographies }) => {
-              return geographies.map((geo: Geography) => {
+            {({ geographies }: { geographies: Geography[] }) =>
+              geographies.map((geo) => {
                 const { rsmKey, properties } = geo;
+                const countryId = properties.ISO_A3;
                 const userCountryAchievements = Object.keys(
-                  userCountries[properties.ISO_A3] ?? {}
+                  userCountries[countryId] ?? {}
                 ).filter(
-                  (value) =>
+                  (achievementId) =>
                     Object.keys(
                       isBootyMode ? BOOTY_ACHIEVEMENTS : SFW_ACHIEVEMENTS
-                    ).includes(value) &&
-                    !!userCountries[properties.ISO_A3][value]
+                    ).includes(achievementId) &&
+                    !!userCountries[countryId][achievementId]
                 ).length;
 
                 return (
-                  <Geography
-                    key={rsmKey}
+                  <StyledGeography
+                    $id={countryId}
+                    $isBootyMode={isBootyMode}
+                    $selectedCountry={selectedCountry}
+                    $userCountryAchievements={userCountryAchievements}
                     geography={geo}
-                    className={classNames(styles.geography, {
-                      [styles.selectedCountry]:
-                        selectedCountry === properties.ISO_A3,
-                      [styles.unfocusedCountry]:
-                        selectedCountry &&
-                        selectedCountry !== properties.ISO_A3,
-                      [styles.bronze]:
-                        !isBootyMode && userCountryAchievements === 1,
-                      [styles.silver]:
-                        userCountryAchievements === (isBootyMode ? 1 : 2),
-                      [styles.gold]:
-                        userCountryAchievements === (isBootyMode ? 2 : 3),
-                    })}
-                    onClick={() => onCountryClick(properties.ISO_A3)}
-                    onMouseOver={() => setHoveredCountry(properties.ISO_A3)}
+                    key={rsmKey}
+                    onClick={() => onCountryClick(countryId)}
                     onMouseOut={() => setHoveredCountry("")}
+                    onMouseOver={() => setHoveredCountry(countryId)}
                   />
                 );
-              });
-            }}
+              })
+            }
           </Geographies>
         </ZoomableGroup>
       </ComposableMap>
-    </div>
+    </StyledMapContainer>
   );
 };
 
