@@ -1,66 +1,47 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
-import Switch from "react-switch";
+import { useUser } from "@auth0/nextjs-auth0";
 
 import { useAppSelector, useAppDispatch } from "app/hooks";
 import { changeTheme, selectIsBootyMode } from "features/theme/themeSlice";
 
-import styled, { useTheme } from "styled-components";
+import Switch from "react-switch";
+import ReactTooltip from "react-tooltip";
+import { GiHamburgerMenu } from "react-icons/gi";
 
-const StyledHeader = styled.header`
-  align-items: center;
-  background-color: ${({ theme }) => theme.colors.dark};
-  color: ${({ theme }) => theme.colors["very-light"]};
-  display: flex;
-  height: 4rem;
-  justify-content: space-between;
-  left: 0;
-  padding: 0 2rem;
-  position: fixed;
-  top: 0;
-  transition: background-color 0.3s ease-in-out;
-  width: 100%;
-  z-index: 1;
-`;
+import { useTheme } from "styled-components";
 
-const StyledUserContainer = styled.div`
-  align-items: center;
-  display: flex;
-  justify-content: center;
-`;
+import {
+  StyledActionContainer,
+  StyledGreeting,
+  StyledHeader,
+  StyledIcon,
+  StyledMenuButton,
+  StyledGreetingContainer,
+} from "./styled";
 
-const StyledIcon = styled.span`
-  position: absolute;
-  top: 2px;
-  ${({ isLeft }: { isLeft?: boolean }) =>
-    isLeft ? "left: 4px;" : "right: 4px;"}
-`;
-
-const StyledAuthBox = styled.div`
-  text-align: right;
-
-  p {
-    margin: 0;
-    margin-left: 2rem;
-  }
-`;
-
-interface Props {
-  userName?: string | null;
-}
-
-const Header = ({ userName }: Props) => {
+const Header = () => {
   const isBootyMode = useAppSelector(selectIsBootyMode);
   const dispatch = useAppDispatch();
   const theme = useTheme();
+  const { user } = useUser();
+
+  const userName = user?.name?.split(" ")?.[0] || user?.nickname;
 
   const handleChange = () =>
     dispatch(changeTheme(isBootyMode ? "sfw" : "booty"));
+
+  const Greeting = () => (
+    <StyledGreeting>
+      <p>Hi, {userName}!</p>
+      <a href="/api/auth/logout">Logout</a>
+    </StyledGreeting>
+  );
 
   return (
     <StyledHeader>
       <h1>{isBootyMode ? "BOOTYDEX" : "COUNTRYDEX"}</h1>
       {userName ? (
-        <StyledUserContainer>
+        <StyledActionContainer>
           <Switch
             aria-label="Booty Mode Toggle"
             checked={isBootyMode}
@@ -72,16 +53,32 @@ const Header = ({ userName }: Props) => {
             onHandleColor={theme.colors["very-light"]}
             uncheckedIcon={<StyledIcon>☀️</StyledIcon>}
           />
-          <StyledAuthBox>
-            <p>Welcome, {userName}.</p>
-            <a href="/api/auth/logout">Logout</a>
-          </StyledAuthBox>
-        </StyledUserContainer>
+          <StyledGreetingContainer>
+            <Greeting />
+          </StyledGreetingContainer>
+          <StyledMenuButton
+            aria-label="Toggle User Menu"
+            data-event="click"
+            data-for="userMenu"
+            data-tip
+          >
+            <GiHamburgerMenu size={30} />
+          </StyledMenuButton>
+          <ReactTooltip
+            backgroundColor={theme.colors.medium}
+            clickable
+            effect="solid"
+            id="userMenu"
+            place="bottom"
+          >
+            <Greeting />
+          </ReactTooltip>
+        </StyledActionContainer>
       ) : (
-        <StyledAuthBox>
+        <StyledGreeting>
           <p>Hello, stranger.</p>
           <a href="/api/auth/login">Login</a>{" "}
-        </StyledAuthBox>
+        </StyledGreeting>
       )}
     </StyledHeader>
   );

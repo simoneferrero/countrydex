@@ -13,10 +13,13 @@ import styled from "styled-components";
 const GEO_URL = process.env.NEXT_PUBLIC_GEO_URL || "";
 
 const StyledContainer = styled.div`
+  height: calc(100vh - 4rem);
   margin-top: 4rem;
-  max-height: calc(100vh - 4rem);
   overflow-y: hidden;
-  padding: 0 3rem;
+
+  main {
+    height: 100%;
+  }
 `;
 
 const StyledLoginPrompt = styled.div`
@@ -28,6 +31,7 @@ const StyledLoginPrompt = styled.div`
   justify-content: center;
   left: 0;
   position: absolute;
+  text-align: center;
   top: 0;
   width: 100%;
 `;
@@ -75,7 +79,6 @@ const Home = () => {
     countryId: string,
     achievementId: string
   ) => {
-    // TODO: handle error and loading
     if (userCountries?.[countryId]?.[achievementId]) {
       await axios.delete(
         `/api/users/${user?.sub}/countries/${countryId}/achievements/${achievementId}`
@@ -105,8 +108,8 @@ const Home = () => {
 
   return (
     <StyledContainer>
+      <Header />
       <main>
-        <Header userName={user?.name || user?.nickname} />
         <Map
           countryList={countryList}
           geoUrl={GEO_URL}
@@ -126,6 +129,7 @@ const Home = () => {
       <CountryDrawer
         country={selectedCountryWithAchievements}
         onAchievementChange={handleAchievementChange}
+        onClose={() => setSelectedCountry("")}
       />
     </StyledContainer>
   );

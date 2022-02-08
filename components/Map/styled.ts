@@ -5,11 +5,12 @@ import { Geography } from "react-simple-maps";
 import styled from "styled-components";
 
 export const StyledMapContainer = styled.div`
+  height: 100%;
   margin-left: auto;
   margin-right: auto;
-  max-width: 100rem;
-  padding-left: 2.5rem;
-  padding-right: 2.5rem;
+  /* max-width: 100rem; */
+  /* padding-left: 2.5rem;
+  padding-right: 2.5rem; */
   position: relative;
 
   > h2 {

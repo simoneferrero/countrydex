@@ -26,6 +26,18 @@ export const StyledDrawer = styled.div`
   }
 `;
 
+const StyledButton = styled.button`
+  background: none;
+  border-radius: 4px;
+  border: 2px solid ${({ theme }) => theme.colors["very-light"]};
+  color: ${({ theme }) => theme.colors["very-light"]};
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  outline: inherit;
+  padding: 4px 8px;
+`;
+
 interface Props {
   country?: {
     achievements: UserCountry;
@@ -33,17 +45,19 @@ interface Props {
     name: string;
   };
   onAchievementChange: (country: string, achievement: string) => void;
+  onClose: () => void;
 }
 
-const CountryDrawer = ({ country, onAchievementChange }: Props) => {
+const CountryDrawer = ({ country, onAchievementChange, onClose }: Props) => {
   const isBootyMode = useAppSelector(selectIsBootyMode);
 
   const getAchievementList = (achievements: Achievements) =>
     Object.values(achievements).map(({ id, text }) => (
       <AchievementSwitch
         checked={country?.achievements[id]}
+        disabled={!country}
         key={id}
-        labelText={text + country?.name}
+        labelText={text + (country?.name || "...")}
         onChange={() => onAchievementChange(country?.id || "", id)}
       />
     ));
@@ -54,9 +68,10 @@ const CountryDrawer = ({ country, onAchievementChange }: Props) => {
   return (
     <StyledDrawer isOpen={!!country}>
       <h3>{country?.name ?? "No country selected"}</h3>
-      {!!country && (
-        <form>{isBootyMode ? bootyAchievementList : sfwAchievementList}</form>
-      )}
+      <form>{isBootyMode ? bootyAchievementList : sfwAchievementList}</form>
+      <StyledButton onClick={onClose}>
+        <span>Close &gt;</span>
+      </StyledButton>
     </StyledDrawer>
   );
 };

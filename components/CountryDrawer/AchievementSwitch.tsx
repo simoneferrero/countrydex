@@ -16,11 +16,17 @@ const StyledLabel = styled.label`
 
 interface Props {
   checked?: boolean;
+  disabled: boolean;
   labelText: string;
   onChange: () => void;
 }
 
-const AchievementSwitch = ({ checked = false, onChange, labelText }: Props) => {
+const AchievementSwitch = ({
+  checked = false,
+  disabled,
+  labelText,
+  onChange,
+}: Props) => {
   const theme = useTheme();
 
   return (
@@ -28,6 +34,7 @@ const AchievementSwitch = ({ checked = false, onChange, labelText }: Props) => {
       <StyledLabel>
         <Switch
           checked={checked}
+          disabled={disabled}
           handleDiameter={24}
           height={24}
           offColor={theme.colors.medium}
