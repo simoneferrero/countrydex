@@ -7,6 +7,7 @@ import axios from "axios";
 import Header from "@/components/Header";
 import Map from "@/components/Map";
 import CountryDrawer from "@/components/CountryDrawer";
+import AchievementSummary from "@/components/AchievementSummary";
 
 import styled from "styled-components";
 
@@ -50,7 +51,9 @@ const Home = () => {
         response.data.objects.ne_110m_admin_0_countries.geometries.reduce(
           (countries: any, { properties }: { properties: Country }) => ({
             ...countries,
-            [properties.ISO_A3]: properties,
+            ...(properties.ISO_A3 !== "-99" && {
+              [properties.ISO_A3]: properties,
+            }),
           }),
           {}
         )
@@ -125,12 +128,16 @@ const Home = () => {
             </h2>
           </StyledLoginPrompt>
         )}
+        <AchievementSummary
+          totalCountries={Object.keys(countryList).length}
+          userCountries={userCountries}
+        />
+        <CountryDrawer
+          country={selectedCountryWithAchievements}
+          onAchievementChange={handleAchievementChange}
+          onClose={() => setSelectedCountry("")}
+        />
       </main>
-      <CountryDrawer
-        country={selectedCountryWithAchievements}
-        onAchievementChange={handleAchievementChange}
-        onClose={() => setSelectedCountry("")}
-      />
     </StyledContainer>
   );
 };
