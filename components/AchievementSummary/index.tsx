@@ -29,7 +29,7 @@ const AchievementSummary = ({ totalCountries, userCountries }: Props) => {
   const currentAchievements = isBootyMode
     ? BOOTY_ACHIEVEMENTS
     : SFW_ACHIEVEMENTS;
-  const maxCountryAchievements = Object.keys(currentAchievements).length;
+  const maxRows = Object.keys(currentAchievements).length;
 
   const achievementStats = Object.values(userCountries).reduce(
     (prev: { [key: string]: number }, cur) => {
@@ -54,23 +54,24 @@ const AchievementSummary = ({ totalCountries, userCountries }: Props) => {
     <StyledDrawer $isOpen={isOpen}>
       <div>
         <ul>
-          {Array.from(Array(maxCountryAchievements + 1).keys(), (v) => {
-            const fullStars = Array.from(Array(v).keys(), (key) => (
+          {Array.from(Array(maxRows + 1).keys(), (rowNumber) => {
+            const fullStars = Array.from(Array(rowNumber).keys(), (key) => (
               <AiFillStar key={`fullStar-${key}`} />
             ));
             const emptyStars = Array.from(
-              Array(maxCountryAchievements - v).keys(),
+              Array(maxRows - rowNumber).keys(),
               (key) => <AiOutlineStar key={`emptyStar-${key}`} />
             );
             const achievements =
-              achievementStats[String(v)] ||
-              Object.values(achievementStats).reduce(
-                (sum, cur) => sum - cur,
-                totalCountries
-              );
+              rowNumber === 0
+                ? Object.values(achievementStats).reduce(
+                    (sum, cur) => sum - cur,
+                    totalCountries
+                  )
+                : achievementStats[String(rowNumber)] || 0;
 
             return (
-              <li key={v}>
+              <li key={rowNumber}>
                 {[...fullStars, ...emptyStars]}: {achievements}/{totalCountries}
               </li>
             );
