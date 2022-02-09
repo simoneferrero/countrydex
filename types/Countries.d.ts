@@ -26,3 +26,11 @@ export interface UserCountry {
 export interface UserCountries {
   [key: string]: UserCountry;
 }
+
+export interface Geography {
+  geometry: any;
+  properties: Country;
+  rsmKey: string;
+  svgPath: string;
+  type: string;
+}

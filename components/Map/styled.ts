@@ -33,14 +33,14 @@ const getGeographyFillValue = ({
   $id,
   $isBootyMode,
   $selectedCountry,
-  theme,
   $userCountryAchievements,
+  theme,
 }: {
   $id: string;
   $isBootyMode: boolean;
   $selectedCountry: string | null;
-  theme: Theme;
   $userCountryAchievements: number;
+  theme: Theme;
 }) => {
   if ($selectedCountry === $id) {
     return theme.colors["very-dark"];
@@ -58,11 +58,18 @@ const getGeographyFillValue = ({
   return theme.colors.medium;
 };
 
+const getOpacityValue = ({
+  $id,
+  $selectedCountry,
+}: {
+  $id: string;
+  $selectedCountry: string | null;
+}) => $selectedCountry && $selectedCountry !== $id && "0.7";
+
 export const StyledGeography = styled(Geography)`
   cursor: pointer;
   fill: ${getGeographyFillValue};
-  opacity: ${({ $selectedCountry, $id }) =>
-    $selectedCountry && $selectedCountry !== $id && "0.7"};
+  opacity: ${getOpacityValue};
   outline: none;
   stroke-width: 0.4;
   stroke: ${({ theme }) => theme.colors["very-light"]};
