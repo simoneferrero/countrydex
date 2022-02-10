@@ -1,6 +1,7 @@
 import type { Country } from "types/Countries";
 
 import { memo, useState } from "react";
+import { useUser } from "@auth0/nextjs-auth0";
 
 import {
   StyledButton,
@@ -18,6 +19,11 @@ interface Props {
 const CountryList = ({ countryList, onClick, selectedCountry }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [filter, setFilter] = useState("");
+  const { user } = useUser();
+
+  if (!user) {
+    return null;
+  }
 
   const filteredCountryList = countryList.filter((country) =>
     !!filter ? country.NAME.toLowerCase().includes(filter.toLowerCase()) : true
