@@ -3,26 +3,44 @@ import styled from "styled-components";
 
 export const StyledDrawer = styled.div`
   background-color: ${({ theme }) => theme.colors["very-dark"]};
-  bottom: ${({ $isOpen }: { $isOpen: boolean }) =>
-    $isOpen ? "0" : "-16.9rem"};
+  bottom: 2rem;
   color: ${({ theme }) => theme.colors["very-light"]};
   display: grid;
-  /* grid-template-rows: auto auto; */
-  height: 20rem;
-  left: 50%;
+  grid-template-columns: max-content 2rem;
+  height: 8rem;
+  justify-content: space-between;
+  left: ${({ $isOpen }: { $isOpen: boolean }) => ($isOpen ? "0" : "-14.5rem")};
   padding: 1rem;
   position: absolute;
-  transform: translateX(-50%);
-  transition: bottom 0.5s ease-in-out;
-  width: 15rem;
+  transition: left 0.5s ease-in-out;
+  width: 18rem;
 
-  ul {
+  @media (min-height: 420px) {
+    height: 12rem;
+  }
+
+  @media (min-height: 550px) {
+    height: 20rem;
+  }
+
+  & > div {
+    display: grid;
+    grid-template-rows: min-content auto;
     height: 100%;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    text-align: center;
-    overflow-y: auto;
+    overflow: hidden;
+
+    ul {
+      list-style-type: none;
+      margin: 0;
+      overflow-y: auto;
+      padding: 0;
+      text-align: left;
+
+      li {
+        align-items: center;
+        display: flex;
+      }
+    }
   }
 `;
 
@@ -53,13 +71,14 @@ export const StyledCountryName = styled.li`
 `;
 
 export const StyledButton = styled.a`
+  align-self: center;
   cursor: pointer;
   font-style: normal;
   height: fit-content;
+  justify-self: center;
+  transform: rotate(-90deg);
 
   h3 {
     margin: 0;
-    margin-bottom: 0.5rem;
-    text-align: center;
   }
 `;

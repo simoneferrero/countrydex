@@ -8,7 +8,7 @@ export const StyledDrawer = styled.div`
   left: ${({ $isOpen }: { $isOpen: boolean }) => ($isOpen ? "0" : "-9.5rem")};
   padding: 1rem;
   position: absolute;
-  top: 6rem;
+  top: 4.5rem;
   transition: left 0.5s ease-in-out;
   width: 13rem;
 

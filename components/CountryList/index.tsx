@@ -31,29 +31,31 @@ const CountryList = ({ countryList, onClick, selectedCountry }: Props) => {
 
   return (
     <StyledDrawer $isOpen={isOpen}>
+      <div>
+        <StyledFilterContainer>
+          <input
+            aria-label="Country List Filter"
+            autoComplete="none"
+            onChange={({ target: { value } }) => setFilter(value)}
+            placeholder="Filter by Country name"
+            value={filter}
+          />
+        </StyledFilterContainer>
+        <ul>
+          {filteredCountryList.map(({ ISO_A3, NAME }) => (
+            <StyledCountryName
+              $isSelected={ISO_A3 === selectedCountry}
+              key={ISO_A3}
+              onClick={() => onClick(ISO_A3)}
+            >
+              {NAME}
+            </StyledCountryName>
+          ))}
+        </ul>
+      </div>
       <StyledButton>
         <h3 onClick={() => setIsOpen((prevValue) => !prevValue)}>Countries</h3>
       </StyledButton>
-      <StyledFilterContainer>
-        <input
-          aria-label="Country List Filter"
-          autoComplete="none"
-          onChange={({ target: { value } }) => setFilter(value)}
-          placeholder="Filter by Country name"
-          value={filter}
-        />
-      </StyledFilterContainer>
-      <ul>
-        {filteredCountryList.map(({ ISO_A3, NAME }) => (
-          <StyledCountryName
-            $isSelected={ISO_A3 === selectedCountry}
-            key={ISO_A3}
-            onClick={() => onClick(ISO_A3)}
-          >
-            {NAME}
-          </StyledCountryName>
-        ))}
-      </ul>
     </StyledDrawer>
   );
 };
