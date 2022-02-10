@@ -14,7 +14,7 @@ import {
   StyledActionContainer,
   StyledGreeting,
   StyledHeader,
-  StyledIcon,
+  StyledIconContainer,
   StyledMenuButton,
   StyledGreetingContainer,
 } from "./styled";
@@ -45,13 +45,13 @@ const Header = () => {
           <Switch
             aria-label="Booty Mode Toggle"
             checked={isBootyMode}
-            checkedIcon={<StyledIcon isLeft>💖</StyledIcon>}
+            checkedIcon={<StyledIconContainer>💖</StyledIconContainer>}
             offColor={theme.colors.medium}
             offHandleColor={theme.colors["very-light"]}
             onChange={handleChange}
             onColor={theme.colors.light}
             onHandleColor={theme.colors["very-light"]}
-            uncheckedIcon={<StyledIcon>☀️</StyledIcon>}
+            uncheckedIcon={<StyledIconContainer>☀️</StyledIconContainer>}
           />
           <StyledGreetingContainer>
             <Greeting />

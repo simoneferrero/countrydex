@@ -25,11 +25,12 @@ export const StyledHeader = styled.header`
   }
 `;
 
-export const StyledIcon = styled.span`
-  position: absolute;
-  top: 2px;
-  ${({ isLeft }: { isLeft?: boolean }) =>
-    isLeft ? "left: 4px;" : "right: 4px;"}
+export const StyledIconContainer = styled.div`
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  width: 100%;
 `;
 
 export const StyledActionContainer = styled.div`
