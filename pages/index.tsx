@@ -8,6 +8,7 @@ import Header from "@/components/Header";
 import Map from "@/components/Map";
 import CountryDrawer from "@/components/CountryDrawer";
 import AchievementSummary from "@/components/AchievementSummary";
+import CountryList from "@/components/CountryList";
 
 import styled from "styled-components";
 
@@ -136,6 +137,13 @@ const Home = () => {
           country={selectedCountryWithAchievements}
           onAchievementChange={handleAchievementChange}
           onClose={() => setSelectedCountry("")}
+        />
+        <CountryList
+          countryList={Object.values(countryList).sort((a, b) =>
+            a.NAME < b.NAME ? -1 : 1
+          )}
+          onClick={handleCountryClick}
+          selectedCountry={selectedCountry}
         />
       </main>
     </StyledContainer>
