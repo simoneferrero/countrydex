@@ -24,7 +24,7 @@ export const addUserCountryAchievement = async (
       userCountryAchievement,
       { upsert: true, new: true }
     );
-    console.log(document);
+
     res.status(201).json({ success: true, data: document });
   } catch (error) {
     res.status(400).json({ success: false });
@@ -47,7 +47,7 @@ export const deleteUserCountryAchievement = async (
       achievementId: req.query.achievementId,
     };
 
-    const document = await UserCountryAchievement.findOneAndDelete(
+    await UserCountryAchievement.findOneAndDelete(
       userCountryAchievement,
       userCountryAchievement
     );

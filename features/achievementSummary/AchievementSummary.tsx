@@ -22,7 +22,7 @@ const AchievementSummary = () => {
   const dispatch = useAppDispatch();
 
   const numberOfCountries = useAppSelector(countriesSelectors.selectTotal);
-  const countries = useAppSelector(countriesSelectors.selectEntities);
+  const countries = useAppSelector(countriesSelectors.selectAll);
 
   if (!user) {
     return null;
@@ -33,10 +33,11 @@ const AchievementSummary = () => {
     : SFW_ACHIEVEMENTS;
   const maxRows = Object.keys(currentAchievements).length;
 
-  const achievementStats = Object.values(countries).reduce(
+  const achievementStats = countries.reduce(
     (prev: { [key: string]: number }, cur) => {
-      const countryAchievementNumber = Object.entries(cur || {}).filter(
-        ([type, value]) => Boolean(value) && currentAchievements[type]
+      const countryAchievementNumber = cur.achievements.filter(
+        (achievement) =>
+          Boolean(achievement) && currentAchievements[achievement]
       ).length;
       const prevCountryAchievementNumber = prev[countryAchievementNumber];
 
