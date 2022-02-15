@@ -1,18 +1,16 @@
-import type { Countries, Country, UserCountries } from "types/Countries";
-
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useUser } from "@auth0/nextjs-auth0";
-import axios from "axios";
+
+import { useAppDispatch, useAppSelector } from "app/hooks";
+import { fetchCountries } from "features/countries/async";
 
 import Header from "@/components/Header";
 import Map from "@/components/Map";
 import CountryDrawer from "@/components/CountryDrawer";
-import AchievementSummary from "@/components/AchievementSummary";
+import AchievementSummary from "features/achievementSummary/AchievementSummary";
 import CountryList from "@/components/CountryList";
 
 import styled from "styled-components";
-
-const GEO_URL = process.env.NEXT_PUBLIC_GEO_URL || "";
 
 const StyledContainer = styled.div`
   height: calc(100vh - 4rem);
@@ -39,88 +37,20 @@ const StyledLoginPrompt = styled.div`
 `;
 
 const Home = () => {
-  const [countryList, setCountryList] = useState<Countries>({});
-  const [userCountries, setUserCountries] = useState<UserCountries>({});
-  const [selectedCountry, setSelectedCountry] = useState("");
   const { user } = useUser();
+  const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    const getCountryData = async () => {
-      const response = await axios(GEO_URL);
-
-      setCountryList(
-        response.data.objects.ne_110m_admin_0_countries.geometries.reduce(
-          (countries: any, { properties }: { properties: Country }) => ({
-            ...countries,
-            ...(properties.ISO_A3 !== "-99" && {
-              [properties.ISO_A3]: properties,
-            }),
-          }),
-          {}
-        )
-      );
-    };
-
-    getCountryData();
-  }, []);
   useEffect(() => {
     if (user) {
-      const getUserCountries = async () => {
-        const response = await axios(`/api/users/${user.sub}/countries`);
-
-        setUserCountries(response.data.data);
-      };
-
-      getUserCountries();
+      dispatch(fetchCountries(user?.sub || ""));
     }
-  }, [user]);
-
-  const handleCountryClick = (country: string) =>
-    setSelectedCountry((prevCountry: string) =>
-      prevCountry === country ? "" : country
-    );
-  const handleAchievementChange = async (
-    countryId: string,
-    achievementId: string
-  ) => {
-    if (userCountries?.[countryId]?.[achievementId]) {
-      await axios.delete(
-        `/api/users/${user?.sub}/countries/${countryId}/achievements/${achievementId}`
-      );
-    } else {
-      await axios.post(
-        `/api/users/${user?.sub}/countries/${countryId}/achievements/${achievementId}`
-      );
-    }
-
-    setUserCountries((prevUserCountries: UserCountries) => ({
-      ...prevUserCountries,
-      [countryId]: {
-        ...prevUserCountries[countryId],
-        [achievementId]: !prevUserCountries?.[countryId]?.[achievementId],
-      },
-    }));
-  };
-
-  const selectedCountryWithAchievements = selectedCountry
-    ? {
-        name: countryList[selectedCountry].NAME,
-        id: countryList[selectedCountry].ISO_A3,
-        achievements: userCountries[selectedCountry] || {},
-      }
-    : undefined;
+  }, [dispatch, user]);
 
   return (
     <StyledContainer>
       <Header />
       <main>
-        <Map
-          countryList={countryList}
-          geoUrl={GEO_URL}
-          onCountryClick={handleCountryClick}
-          selectedCountry={selectedCountry}
-          userCountries={userCountries}
-        />
+        <Map />
         {!user && (
           <StyledLoginPrompt>
             <h2>
@@ -129,22 +59,9 @@ const Home = () => {
             </h2>
           </StyledLoginPrompt>
         )}
-        <AchievementSummary
-          totalCountries={Object.keys(countryList).length}
-          userCountries={userCountries}
-        />
-        <CountryDrawer
-          country={selectedCountryWithAchievements}
-          onAchievementChange={handleAchievementChange}
-          onClose={() => setSelectedCountry("")}
-        />
-        <CountryList
-          countryList={Object.values(countryList).sort((a, b) =>
-            a.NAME < b.NAME ? -1 : 1
-          )}
-          onClick={handleCountryClick}
-          selectedCountry={selectedCountry}
-        />
+        <AchievementSummary />
+        <CountryDrawer />
+        <CountryList />
       </main>
     </StyledContainer>
   );

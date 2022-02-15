@@ -1,9 +1,12 @@
-import type { UserCountries } from "types/Countries";
-
-import { memo, useState } from "react";
+import { memo } from "react";
 import { useUser } from "@auth0/nextjs-auth0";
 
-import { useAppSelector } from "app/hooks";
+import { useAppDispatch, useAppSelector } from "app/hooks";
+import {
+  changeAchievementSummaryStatus,
+  selectIsAchievementSummaryOpen,
+} from "./achievementSummarySlice";
+import { countriesSelectors } from "features/countries/countriesSlice";
 import { selectIsBootyMode } from "features/theme/themeSlice";
 
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
@@ -12,15 +15,14 @@ import { SFW_ACHIEVEMENTS, BOOTY_ACHIEVEMENTS } from "constants/achievements";
 
 import { StyledButton, StyledDrawer } from "./styled";
 
-interface Props {
-  totalCountries: number;
-  userCountries: UserCountries;
-}
-
-const AchievementSummary = ({ totalCountries, userCountries }: Props) => {
-  const [isOpen, setIsOpen] = useState(false);
+const AchievementSummary = () => {
+  const isOpen = useAppSelector(selectIsAchievementSummaryOpen);
   const isBootyMode = useAppSelector(selectIsBootyMode);
   const { user } = useUser();
+  const dispatch = useAppDispatch();
+
+  const numberOfCountries = useAppSelector(countriesSelectors.selectTotal);
+  const countries = useAppSelector(countriesSelectors.selectEntities);
 
   if (!user) {
     return null;
@@ -31,9 +33,9 @@ const AchievementSummary = ({ totalCountries, userCountries }: Props) => {
     : SFW_ACHIEVEMENTS;
   const maxRows = Object.keys(currentAchievements).length;
 
-  const achievementStats = Object.values(userCountries).reduce(
+  const achievementStats = Object.values(countries).reduce(
     (prev: { [key: string]: number }, cur) => {
-      const countryAchievementNumber = Object.entries(cur).filter(
+      const countryAchievementNumber = Object.entries(cur || {}).filter(
         ([type, value]) => Boolean(value) && currentAchievements[type]
       ).length;
       const prevCountryAchievementNumber = prev[countryAchievementNumber];
@@ -66,20 +68,23 @@ const AchievementSummary = ({ totalCountries, userCountries }: Props) => {
               rowNumber === 0
                 ? Object.values(achievementStats).reduce(
                     (sum, cur) => sum - cur,
-                    totalCountries
+                    numberOfCountries
                   )
                 : achievementStats[String(rowNumber)] || 0;
 
             return (
               <li key={rowNumber}>
-                {[...fullStars, ...emptyStars]}: {achievements}/{totalCountries}
+                {[...fullStars, ...emptyStars]}: {achievements}/
+                {numberOfCountries}
               </li>
             );
           })}
         </ul>
       </div>
       <StyledButton>
-        <h3 onClick={() => setIsOpen((prevValue) => !prevValue)}>Totals</h3>
+        <h3 onClick={() => dispatch(changeAchievementSummaryStatus(!isOpen))}>
+          Totals
+        </h3>
       </StyledButton>
     </StyledDrawer>
   );

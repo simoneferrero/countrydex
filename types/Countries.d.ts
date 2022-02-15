@@ -1,3 +1,5 @@
+import type { ObjectId } from "mongoose";
+
 export interface Country {
   ABBREV: string;
   CONTINENT: string;
@@ -15,16 +17,8 @@ export interface Country {
   SUBREGION: string;
 }
 
-export interface Countries {
-  [key: string]: Country;
-}
-
-export interface UserCountry {
-  [key: string]: boolean;
-}
-
-export interface UserCountries {
-  [key: string]: UserCountry;
+export interface CountryWithAchievements extends Country {
+  achievements: string[];
 }
 
 export interface Geography {
@@ -33,4 +27,11 @@ export interface Geography {
   rsmKey: string;
   svgPath: string;
   type: string;
+}
+
+export interface UserCountryAchievement {
+  _id: ObjectId;
+  userId: string;
+  countryId: string;
+  achievementId: string;
 }

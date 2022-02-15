@@ -1,10 +1,11 @@
-import type { Countries, Geography, UserCountries } from "types/Countries";
+import type { Geography } from "types/Countries";
 
 import { useCallback, useState } from "react";
 import { useTheme } from "styled-components";
 
 import { useAppSelector } from "app/hooks";
 import { selectIsBootyMode } from "features/theme/themeSlice";
+import { countriesSelectors } from "features/countries/countriesSlice";
 
 import {
   ComposableMap,
@@ -17,33 +18,19 @@ import Country from "./Country";
 
 import { StyledMapContainer } from "./styled";
 
-interface Props {
-  countryList: Countries;
-  geoUrl: string;
-  onCountryClick: (country: string) => void;
-  selectedCountry: string;
-  userCountries: UserCountries;
-}
+const GEO_URL = process.env.NEXT_PUBLIC_GEO_URL || "";
 
-const Map = ({
-  countryList,
-  geoUrl,
-  onCountryClick,
-  selectedCountry,
-  userCountries,
-}: Props) => {
+const Map = () => {
   const [hoveredCountry, setHoveredCountry] = useState("");
-  const isBootyMode = useAppSelector(selectIsBootyMode);
+  const countries = useAppSelector(countriesSelectors.selectEntities);
   const theme = useTheme();
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const memoizedOnCountryClick = useCallback(onCountryClick, []);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const memoizedSetHoveredCountry = useCallback(setHoveredCountry, []);
 
   return (
     <StyledMapContainer>
-      <h2>{countryList[hoveredCountry]?.NAME ?? ""}</h2>
+      <h2>{countries[hoveredCountry]?.NAME ?? ""}</h2>
       <ComposableMap>
         <ZoomableGroup zoom={1}>
           <Sphere
@@ -53,25 +40,15 @@ const Map = ({
             strokeWidth={0.3}
           />
           <Graticule stroke={theme.colors["very-dark"]} strokeWidth={0.3} />
-          <Geographies geography={geoUrl}>
+          <Geographies geography={GEO_URL}>
             {({ geographies }: { geographies: Geography[] }) =>
-              geographies.map((geo) => {
-                const { rsmKey, properties } = geo;
-                const countryId = properties.ISO_A3;
-                const userCountry = userCountries[countryId];
-
-                return (
-                  <Country
-                    geo={geo}
-                    isBootyMode={isBootyMode}
-                    key={rsmKey}
-                    onClick={memoizedOnCountryClick}
-                    selectedCountry={selectedCountry}
-                    setHoveredCountry={memoizedSetHoveredCountry}
-                    userCountry={userCountry}
-                  />
-                );
-              })
+              geographies.map((geo) => (
+                <Country
+                  geo={geo}
+                  key={geo.rsmKey}
+                  setHoveredCountry={memoizedSetHoveredCountry}
+                />
+              ))
             }
           </Geographies>
         </ZoomableGroup>

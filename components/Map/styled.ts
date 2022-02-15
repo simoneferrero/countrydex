@@ -32,17 +32,17 @@ export const StyledMapContainer = styled.div`
 const getGeographyFillValue = ({
   $id,
   $isBootyMode,
-  $selectedCountry,
+  $selectedCountryId,
   $userCountryAchievements,
   theme,
 }: {
   $id: string;
   $isBootyMode: boolean;
-  $selectedCountry: string | null;
+  $selectedCountryId: string | null;
   $userCountryAchievements: number;
   theme: Theme;
 }) => {
-  if ($selectedCountry === $id) {
+  if ($selectedCountryId === $id) {
     return theme.colors["very-dark"];
   }
   if (!$isBootyMode && $userCountryAchievements === 1) {
@@ -60,11 +60,11 @@ const getGeographyFillValue = ({
 
 const getOpacityValue = ({
   $id,
-  $selectedCountry,
+  $selectedCountryId,
 }: {
   $id: string;
-  $selectedCountry: string | null;
-}) => $selectedCountry && $selectedCountry !== $id && "0.7";
+  $selectedCountryId: string | null;
+}) => $selectedCountryId && $selectedCountryId !== $id && "0.7";
 
 export const StyledGeography = styled(Geography)`
   cursor: pointer;

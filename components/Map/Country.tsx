@@ -1,6 +1,14 @@
-import type { Geography, UserCountry } from "types/Countries";
+import type { Geography } from "types/Countries";
 
 import { memo } from "react";
+
+import { useAppDispatch, useAppSelector } from "app/hooks";
+import {
+  countriesSelectors,
+  setSelectedCountryId,
+  selectedCountryIdSelector,
+} from "features/countries/countriesSlice";
+import { selectIsBootyMode } from "features/theme/themeSlice";
 
 import { SFW_ACHIEVEMENTS, BOOTY_ACHIEVEMENTS } from "constants/achievements";
 
@@ -8,43 +16,34 @@ import { StyledGeography } from "./styled";
 
 interface Props {
   geo: Geography;
-  isBootyMode: boolean;
-  onClick: (countryId: string) => void;
-  selectedCountry: string;
   setHoveredCountry: (countryId: string) => void;
-  userCountry: UserCountry;
 }
 
-const GeoCountry = (props: Props) => {
-  const {
-    geo,
-    isBootyMode,
-    onClick,
-    selectedCountry,
-    setHoveredCountry,
-    userCountry,
-  } = props;
+const Country = ({ geo, setHoveredCountry }: Props) => {
+  const isBootyMode = useAppSelector(selectIsBootyMode);
+  const selectedCountryId = useAppSelector(selectedCountryIdSelector);
   const { properties } = geo;
   const countryId = properties.ISO_A3;
-  const userCountryAchievements = Object.keys(userCountry ?? {}).filter(
-    (achievementId) =>
-      Object.keys(isBootyMode ? BOOTY_ACHIEVEMENTS : SFW_ACHIEVEMENTS).includes(
-        achievementId
-      ) && !!userCountry[achievementId]
-  ).length;
+  const countryAchievements =
+    useAppSelector((state) => countriesSelectors.selectById(state, countryId))
+      ?.achievements ?? [];
+  const userCountryAchievements = Object.keys(
+    isBootyMode ? BOOTY_ACHIEVEMENTS : SFW_ACHIEVEMENTS
+  ).filter((achievement) => countryAchievements.includes(achievement)).length;
+  const dispatch = useAppDispatch();
 
   return (
     <StyledGeography
       $id={countryId}
       $isBootyMode={isBootyMode}
-      $selectedCountry={selectedCountry}
+      $selectedCountryId={selectedCountryId}
       $userCountryAchievements={userCountryAchievements}
       geography={geo}
-      onClick={() => onClick(countryId)}
+      onClick={() => dispatch(setSelectedCountryId(countryId))}
       onMouseOut={() => setHoveredCountry("")}
       onMouseOver={() => setHoveredCountry(countryId)}
     />
   );
 };
 
-export default memo(GeoCountry);
+export default memo(Country);

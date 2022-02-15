@@ -1,7 +1,14 @@
-import type { Country } from "types/Countries";
-
 import { memo, useState } from "react";
 import { useUser } from "@auth0/nextjs-auth0";
+
+import { useAppDispatch, useAppSelector } from "app/hooks";
+import {
+  countriesSelectors,
+  isCountryListOpenSelector,
+  selectedCountryIdSelector,
+  setIsCountryListOpen,
+  setSelectedCountryId,
+} from "features/countries/countriesSlice";
 
 import {
   StyledButton,
@@ -10,22 +17,19 @@ import {
   StyledCountryName,
 } from "./styled";
 
-interface Props {
-  countryList: Country[];
-  onClick: (country: string) => void;
-  selectedCountry: string;
-}
-
-const CountryList = ({ countryList, onClick, selectedCountry }: Props) => {
-  const [isOpen, setIsOpen] = useState(false);
+const CountryList = () => {
   const [filter, setFilter] = useState("");
   const { user } = useUser();
+  const isOpen = useAppSelector(isCountryListOpenSelector);
+  const countries = useAppSelector(countriesSelectors.selectAll);
+  const selectedCountryId = useAppSelector(selectedCountryIdSelector);
+  const dispatch = useAppDispatch();
 
   if (!user) {
     return null;
   }
 
-  const filteredCountryList = countryList.filter((country) =>
+  const filteredCountries = countries.filter((country) =>
     !!filter ? country.NAME.toLowerCase().includes(filter.toLowerCase()) : true
   );
 
@@ -42,11 +46,11 @@ const CountryList = ({ countryList, onClick, selectedCountry }: Props) => {
           />
         </StyledFilterContainer>
         <ul>
-          {filteredCountryList.map(({ ISO_A3, NAME }) => (
+          {filteredCountries.map(({ ISO_A3, NAME }) => (
             <StyledCountryName
-              $isSelected={ISO_A3 === selectedCountry}
+              $isSelected={ISO_A3 === selectedCountryId}
               key={ISO_A3}
-              onClick={() => onClick(ISO_A3)}
+              onClick={() => dispatch(setSelectedCountryId(ISO_A3))}
             >
               {NAME}
             </StyledCountryName>
@@ -54,7 +58,9 @@ const CountryList = ({ countryList, onClick, selectedCountry }: Props) => {
         </ul>
       </div>
       <StyledButton>
-        <h3 onClick={() => setIsOpen((prevValue) => !prevValue)}>Countries</h3>
+        <h3 onClick={() => dispatch(setIsCountryListOpen(!isOpen))}>
+          Countries
+        </h3>
       </StyledButton>
     </StyledDrawer>
   );

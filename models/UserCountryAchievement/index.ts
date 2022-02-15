@@ -1,10 +1,6 @@
-import mongoose from "mongoose";
+import type { UserCountryAchievement } from "types/Countries";
 
-interface UserCountryAchievement {
-  userId: string;
-  countryId: string;
-  achievementId: string;
-}
+import mongoose from "mongoose";
 
 const UserCountryAchievementSchema =
   new mongoose.Schema<UserCountryAchievement>({
