@@ -7,5 +7,9 @@ export const getCountryData = async (
 ): Promise<CountryWithAchievements[]> => {
   const response = await axios(`/api/users/${userId}/countries`);
 
+  if (response.status !== 201) {
+    throw new Error("Unable to fetch countries");
+  }
+
   return response.data.data;
 };

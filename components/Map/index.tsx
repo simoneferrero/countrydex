@@ -4,7 +4,6 @@ import { useCallback, useState } from "react";
 import { useTheme } from "styled-components";
 
 import { useAppSelector } from "app/hooks";
-import { selectIsBootyMode } from "features/theme/themeSlice";
 import { countriesSelectors } from "features/countries/countriesSlice";
 
 import {

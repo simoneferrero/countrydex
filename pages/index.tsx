@@ -1,14 +1,16 @@
 import { useEffect } from "react";
 import { useUser } from "@auth0/nextjs-auth0";
 
-import { useAppDispatch, useAppSelector } from "app/hooks";
+import { useAppDispatch } from "app/hooks";
 import { fetchCountries } from "features/countries/async";
 
-import Header from "@/components/Header";
-import Map from "@/components/Map";
-import CountryDrawer from "@/components/CountryDrawer";
 import AchievementSummary from "features/achievementSummary/AchievementSummary";
+import CountryDrawer from "@/components/CountryDrawer";
 import CountryList from "@/components/CountryList";
+import Error from "@/components/Error";
+import Header from "@/components/Header";
+import Loader from "@/components/Loader";
+import Map from "@/components/Map";
 
 import styled from "styled-components";
 
@@ -62,6 +64,8 @@ const Home = () => {
         <AchievementSummary />
         <CountryDrawer />
         <CountryList />
+        <Loader />
+        <Error />
       </main>
     </StyledContainer>
   );
