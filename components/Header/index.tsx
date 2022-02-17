@@ -49,9 +49,9 @@ const Header = () => {
           />
           <StyledGreeting>
             <p>Hi, {userName}!</p>
-            <a href={LOG_OUT_URL}>Logout</a>
+            <a href={LOG_OUT_URL}>Log out</a>
           </StyledGreeting>
-          <StyledMenuButton aria-label="Logout" href={LOG_OUT_URL}>
+          <StyledMenuButton aria-label="Log out" href={LOG_OUT_URL}>
             <FiLogOut size={30} />
           </StyledMenuButton>
         </StyledActionContainer>
@@ -59,9 +59,9 @@ const Header = () => {
         <>
           <StyledGreeting>
             <p>Hello, stranger.</p>
-            <a href={LOG_IN_URL}>Login</a>
+            <a href={LOG_IN_URL}>Log in/Sign up</a>
           </StyledGreeting>
-          <StyledMenuButton aria-label="Login" href={LOG_IN_URL}>
+          <StyledMenuButton aria-label="Log in/Sign up" href={LOG_IN_URL}>
             <FiLogIn size={30} />
           </StyledMenuButton>
         </>

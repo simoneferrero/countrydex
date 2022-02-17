@@ -49,6 +49,7 @@ const StyledLoginPrompt = styled.div`
   height: 100%;
   justify-content: center;
   left: 0;
+  padding: ${({ theme }) => theme.spacing.md};
   position: absolute;
   text-align: center;
   top: 0;
@@ -75,7 +76,8 @@ const Home = () => {
           <StyledLoginPrompt>
             <h2>
               {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-              <a href="/api/auth/login">Login</a> to save your achievements!
+              <a href="/api/auth/login">Log in or sign up</a> to save your
+              achievements!
             </h2>
           </StyledLoginPrompt>
         )}
