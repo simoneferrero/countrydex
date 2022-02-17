@@ -5,8 +5,7 @@ import { useAppSelector, useAppDispatch } from "app/hooks";
 import { changeTheme, selectIsBootyMode } from "features/theme/themeSlice";
 
 import Switch from "react-switch";
-import ReactTooltip from "react-tooltip";
-import { GiHamburgerMenu } from "react-icons/gi";
+import { FiLogIn, FiLogOut } from "react-icons/fi";
 
 import { useTheme } from "styled-components";
 
@@ -16,8 +15,10 @@ import {
   StyledHeader,
   StyledIconContainer,
   StyledMenuButton,
-  StyledGreetingContainer,
 } from "./styled";
+
+const LOG_IN_URL = "/api/auth/login";
+const LOG_OUT_URL = "/api/auth/logout";
 
 const Header = () => {
   const isBootyMode = useAppSelector(selectIsBootyMode);
@@ -29,13 +30,6 @@ const Header = () => {
 
   const handleChange = () =>
     dispatch(changeTheme(isBootyMode ? "sfw" : "booty"));
-
-  const Greeting = () => (
-    <StyledGreeting>
-      <p>Hi, {userName}!</p>
-      <a href="/api/auth/logout">Logout</a>
-    </StyledGreeting>
-  );
 
   return (
     <StyledHeader>
@@ -53,32 +47,24 @@ const Header = () => {
             onHandleColor={theme.colors["very-light"]}
             uncheckedIcon={<StyledIconContainer>☀️</StyledIconContainer>}
           />
-          <StyledGreetingContainer>
-            <Greeting />
-          </StyledGreetingContainer>
-          <StyledMenuButton
-            aria-label="Toggle User Menu"
-            data-event="click"
-            data-for="userMenu"
-            data-tip
-          >
-            <GiHamburgerMenu size={30} />
+          <StyledGreeting>
+            <p>Hi, {userName}!</p>
+            <a href={LOG_OUT_URL}>Logout</a>
+          </StyledGreeting>
+          <StyledMenuButton aria-label="Logout" href={LOG_OUT_URL}>
+            <FiLogOut size={30} />
           </StyledMenuButton>
-          <ReactTooltip
-            backgroundColor={theme.colors.medium}
-            clickable
-            effect="solid"
-            id="userMenu"
-            place="bottom"
-          >
-            <Greeting />
-          </ReactTooltip>
         </StyledActionContainer>
       ) : (
-        <StyledGreeting>
-          <p>Hello, stranger.</p>
-          <a href="/api/auth/login">Login</a>{" "}
-        </StyledGreeting>
+        <>
+          <StyledGreeting>
+            <p>Hello, stranger.</p>
+            <a href={LOG_IN_URL}>Login</a>
+          </StyledGreeting>
+          <StyledMenuButton aria-label="Login" href={LOG_IN_URL}>
+            <FiLogIn size={30} />
+          </StyledMenuButton>
+        </>
       )}
     </StyledHeader>
   );

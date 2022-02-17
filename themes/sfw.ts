@@ -1,6 +1,9 @@
 import type { Theme } from "types/Theme";
 
+import baseTheme from "./base";
+
 const sfwTheme: Theme = {
+  ...baseTheme,
   colors: {
     "very-light": "#e1d8c8",
     light: "#dcba82",
