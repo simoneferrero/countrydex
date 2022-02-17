@@ -38,10 +38,10 @@ const AchievementSwitch = ({
           handleDiameter={24}
           height={24}
           offColor={theme.colors.medium}
-          offHandleColor={theme.colors["very-light"]}
+          offHandleColor={theme.colors.veryLight}
           onChange={onChange}
           onColor={theme.colors.light}
-          onHandleColor={theme.colors["very-light"]}
+          onHandleColor={theme.colors.veryLight}
           width={56}
         />
         <span>{labelText}</span>

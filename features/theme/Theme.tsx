@@ -11,7 +11,7 @@ import bootyTheme from "themes/booty";
 const GlobalStyle = createGlobalStyle`
   html,
   body {
-    background-color: ${({ theme }) => theme.colors["very-light"]};
+    background-color: ${({ theme }) => theme.colors.veryLight};
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
       Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
     height: ${({ $height }: { $height: string }) => $height};

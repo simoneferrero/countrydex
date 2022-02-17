@@ -17,8 +17,8 @@ const StyledLoader = styled.div`
 
   div {
     animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-    border: 8px solid ${({ theme }) => theme.colors["very-dark"]};
-    border-color: ${({ theme }) => theme.colors["very-dark"]} transparent
+    border: 8px solid ${({ theme }) => theme.colors.veryDark};
+    border-color: ${({ theme }) => theme.colors.veryDark} transparent
       transparent transparent;
     border-radius: 50%;
     box-sizing: border-box;

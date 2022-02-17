@@ -4,14 +4,14 @@ import styled, { css } from "styled-components";
 
 export const StyledDrawer = styled.div`
   ${({ $isOpen, theme }: { $isOpen: boolean; theme: Theme }) => css`
+    bottom: ${theme.sizing.xl};
     left: ${theme.sizing.md};
     position: absolute;
-    top: 5.5rem;
 
     > div {
-      background-color: ${theme.colors["very-dark"]};
+      background-color: ${theme.colors.veryDark};
       border-radius: ${theme.borderRadius};
-      color: ${theme.colors["very-light"]};
+      color: ${theme.colors.veryLight};
       opacity: ${$isOpen ? 1 : 0};
       padding: ${theme.sizing.md};
       position: relative;
@@ -39,7 +39,6 @@ export const StyledDrawer = styled.div`
 
     @media (min-width: ${theme.breakpoints.md}) {
       left: ${theme.sizing.xl};
-      top: 6rem;
     }
   `}
 `;

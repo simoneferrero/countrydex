@@ -1,19 +1,21 @@
 import { useAppSelector } from "app/hooks";
 import { errorSelector } from "features/countries/countriesSlice";
 
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const StyledErrorContainer = styled.div`
-  background-color: #f44336;
-  border-radius: 5px;
-  bottom: 2rem;
-  color: #fff;
-  left: 50%;
-  padding: 0.5rem 1rem;
-  position: absolute;
-  text-align: center;
-  transform: translateX(-50%);
-  z-index: 900;
+  ${({ theme }) => css`
+    background-color: ${theme.colors.errorBackground};
+    border-radius: 5px;
+    bottom: ${theme.sizing.xl};
+    color: ${theme.colors.errorFont};
+    left: 50%;
+    padding: ${theme.sizing.xs} ${theme.sizing.md};
+    position: absolute;
+    text-align: center;
+    transform: translateX(-50%);
+    z-index: 900;
+  `}
 `;
 
 const Error = () => {

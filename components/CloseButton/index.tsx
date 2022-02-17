@@ -8,7 +8,7 @@ export const StyledButton = styled.button`
   ${({ $size, theme }: { $size: "small" | "large"; theme: Theme }) => css`
     background: none;
     border: none;
-    color: ${theme.colors["very-dark"]};
+    color: ${theme.colors.veryDark};
     cursor: pointer;
     font: inherit;
     outline: inherit;

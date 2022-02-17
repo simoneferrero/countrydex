@@ -2,19 +2,22 @@ import type { Theme } from "types/Theme";
 
 import { Geography } from "react-simple-maps";
 
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+
+export const StyledWrapper = styled.div`
+  height: 100%;
+  position: relative;
+  width: 100%;
+`;
 
 export const StyledMapContainer = styled.div`
   height: 100%;
   margin-left: auto;
   margin-right: auto;
-  /* max-width: 100rem; */
-  /* padding-left: 2.5rem;
-  padding-right: 2.5rem; */
   position: relative;
 
   > h2 {
-    color: ${({ theme }) => theme.colors["very-dark"]};
+    color: ${({ theme }) => theme.colors.veryDark};
     left: 50%;
     pointer-events: none;
     position: absolute;
@@ -26,6 +29,22 @@ export const StyledMapContainer = styled.div`
     height: 100%;
     overflow: visible;
     width: 100%;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.sm}) {
+    padding: 0 4rem;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding: 0 9rem;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    padding: 0 12rem;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.xl}) {
+    padding: 0 18rem;
   }
 `;
 
@@ -43,7 +62,7 @@ const getGeographyFillValue = ({
   theme: Theme;
 }) => {
   if ($selectedCountryId === $id) {
-    return theme.colors["very-dark"];
+    return theme.colors.veryDark;
   }
   if (!$isBootyMode && $userCountryAchievements === 1) {
     return theme.colors.single;
@@ -67,15 +86,17 @@ const getOpacityValue = ({
 }) => $selectedCountryId && $selectedCountryId !== $id && "0.7";
 
 export const StyledGeography = styled(Geography)`
-  cursor: pointer;
-  fill: ${getGeographyFillValue};
-  opacity: ${getOpacityValue};
-  outline: none;
-  stroke-width: 0.4;
-  stroke: ${({ theme }) => theme.colors["very-light"]};
-  transition: opacity 0.5s ease-in-out, fill 0.3s ease-in-out;
+  ${({ theme }) => css`
+    cursor: pointer;
+    fill: ${getGeographyFillValue};
+    opacity: ${getOpacityValue};
+    outline: none;
+    stroke-width: 0.4;
+    stroke: ${theme.colors.veryLight};
+    transition: ${theme.transition};
 
-  &:hover {
-    fill: ${({ theme }) => theme.colors["very-dark"]};
-  }
+    &:hover {
+      fill: ${({ theme }) => theme.colors.veryDark};
+    }
+  `}
 `;

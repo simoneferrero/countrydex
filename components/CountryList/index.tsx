@@ -6,20 +6,18 @@ import {
   countriesSelectors,
   isCountryListOpenSelector,
   selectedCountryIdSelector,
-  setIsCountryListOpen,
   setSelectedCountryId,
 } from "features/countries/countriesSlice";
+import { isBootyModeSelector } from "features/theme/themeSlice";
 
-import {
-  StyledButton,
-  StyledDrawer,
-  StyledFilterContainer,
-  StyledCountryName,
-} from "./styled";
+import { BOOTY_ACHIEVEMENTS, SFW_ACHIEVEMENTS } from "constants/achievements";
+
+import { StyledDrawer, StyledCountryName } from "./styled";
 
 const CountryList = () => {
   const [filter, setFilter] = useState("");
   const { user } = useUser();
+  const isBootyMode = useAppSelector(isBootyModeSelector);
   const isOpen = useAppSelector(isCountryListOpenSelector);
   const countries = useAppSelector(countriesSelectors.selectAll);
   const selectedCountryId = useAppSelector(selectedCountryIdSelector);
@@ -35,33 +33,32 @@ const CountryList = () => {
 
   return (
     <StyledDrawer $isOpen={isOpen}>
-      <div>
-        <StyledFilterContainer>
-          <input
-            aria-label="Country List Filter"
-            autoComplete="none"
-            onChange={({ target: { value } }) => setFilter(value)}
-            placeholder="Filter by Country name"
-            value={filter}
-          />
-        </StyledFilterContainer>
-        <ul>
-          {filteredCountries.map(({ ISO_A3, NAME }) => (
+      <input
+        aria-label="Country List Filter"
+        autoComplete="none"
+        onChange={({ target: { value } }) => setFilter(value)}
+        placeholder="Filter by Country name"
+        value={filter}
+      />
+      <ul>
+        {filteredCountries.map(({ achievements, ISO_A3, NAME }) => {
+          const userCountryAchievements = Object.keys(
+            isBootyMode ? BOOTY_ACHIEVEMENTS : SFW_ACHIEVEMENTS
+          ).filter((achievement) => achievements.includes(achievement)).length;
+
+          return (
             <StyledCountryName
+              $isBootyMode={isBootyMode}
               $isSelected={ISO_A3 === selectedCountryId}
+              $userCountryAchievements={userCountryAchievements}
               key={ISO_A3}
               onClick={() => dispatch(setSelectedCountryId(ISO_A3))}
             >
               {NAME}
             </StyledCountryName>
-          ))}
-        </ul>
-      </div>
-      <StyledButton>
-        <h3 onClick={() => dispatch(setIsCountryListOpen(!isOpen))}>
-          Countries
-        </h3>
-      </StyledButton>
+          );
+        })}
+      </ul>
     </StyledDrawer>
   );
 };

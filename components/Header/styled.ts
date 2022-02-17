@@ -4,7 +4,7 @@ export const StyledHeader = styled.header`
   ${({ theme }) => css`
     align-items: center;
     background-color: ${theme.colors.dark};
-    color: ${theme.colors["very-light"]};
+    color: ${theme.colors.veryLight};
     display: flex;
     height: 4rem;
     justify-content: space-between;

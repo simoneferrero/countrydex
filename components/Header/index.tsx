@@ -41,10 +41,10 @@ const Header = () => {
             checked={isBootyMode}
             checkedIcon={<StyledIconContainer>💖</StyledIconContainer>}
             offColor={theme.colors.medium}
-            offHandleColor={theme.colors["very-light"]}
+            offHandleColor={theme.colors.veryLight}
             onChange={handleChange}
             onColor={theme.colors.light}
-            onHandleColor={theme.colors["very-light"]}
+            onHandleColor={theme.colors.veryLight}
             uncheckedIcon={<StyledIconContainer>☀️</StyledIconContainer>}
           />
           <StyledGreeting>

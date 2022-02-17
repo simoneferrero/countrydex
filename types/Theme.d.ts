@@ -16,14 +16,16 @@ export interface Theme {
   };
   transition: string;
   colors: {
-    "very-light": string;
+    veryLight: string;
     light: string;
     medium: string;
     dark: string;
-    "very-dark": string;
+    veryDark: string;
     single: string;
     double: string;
     triple: string;
+    errorFont: string;
+    errorBackground: string;
   };
 }
 

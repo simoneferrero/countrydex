@@ -14,8 +14,9 @@ import {
   ZoomableGroup,
 } from "react-simple-maps";
 import Country from "./Country";
+import CountryListButton from "components/CountryList/CountryListButton";
 
-import { StyledMapContainer } from "./styled";
+import { StyledMapContainer, StyledWrapper } from "./styled";
 
 const GEO_URL = process.env.NEXT_PUBLIC_GEO_URL || "";
 
@@ -28,31 +29,34 @@ const Map = () => {
   const memoizedSetHoveredCountry = useCallback(setHoveredCountry, []);
 
   return (
-    <StyledMapContainer>
-      <h2>{countries[hoveredCountry]?.NAME ?? ""}</h2>
-      <ComposableMap>
-        <ZoomableGroup zoom={1}>
-          <Sphere
-            fill="transparent"
-            id="rsm-sphere"
-            stroke={theme.colors["very-dark"]}
-            strokeWidth={0.3}
-          />
-          <Graticule stroke={theme.colors["very-dark"]} strokeWidth={0.3} />
-          <Geographies geography={GEO_URL}>
-            {({ geographies }: { geographies: Geography[] }) =>
-              geographies.map((geo) => (
-                <Country
-                  geo={geo}
-                  key={geo.rsmKey}
-                  setHoveredCountry={memoizedSetHoveredCountry}
-                />
-              ))
-            }
-          </Geographies>
-        </ZoomableGroup>
-      </ComposableMap>
-    </StyledMapContainer>
+    <StyledWrapper>
+      <StyledMapContainer>
+        <h2>{countries[hoveredCountry]?.NAME ?? ""}</h2>
+        <ComposableMap>
+          <ZoomableGroup zoom={1}>
+            <Sphere
+              fill="transparent"
+              id="rsm-sphere"
+              stroke={theme.colors.veryDark}
+              strokeWidth={0.3}
+            />
+            <Graticule stroke={theme.colors.veryDark} strokeWidth={0.3} />
+            <Geographies geography={GEO_URL}>
+              {({ geographies }: { geographies: Geography[] }) =>
+                geographies.map((geo) => (
+                  <Country
+                    geo={geo}
+                    key={geo.rsmKey}
+                    setHoveredCountry={memoizedSetHoveredCountry}
+                  />
+                ))
+              }
+            </Geographies>
+          </ZoomableGroup>
+        </ComposableMap>
+      </StyledMapContainer>
+      <CountryListButton />
+    </StyledWrapper>
   );
 };
 
