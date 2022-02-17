@@ -12,7 +12,7 @@ import { isBootyModeSelector } from "features/theme/themeSlice";
 
 import { BOOTY_ACHIEVEMENTS, SFW_ACHIEVEMENTS } from "constants/achievements";
 
-import { StyledDrawer, StyledCountryName } from "./styled";
+import { StyledContainer, StyledCountryName } from "./styled";
 
 const CountryList = () => {
   const [filter, setFilter] = useState("");
@@ -32,7 +32,7 @@ const CountryList = () => {
   );
 
   return (
-    <StyledDrawer $isOpen={isOpen}>
+    <StyledContainer $isOpen={isOpen}>
       <input
         aria-label="Country List Filter"
         autoComplete="none"
@@ -59,7 +59,7 @@ const CountryList = () => {
           );
         })}
       </ul>
-    </StyledDrawer>
+    </StyledContainer>
   );
 };
 

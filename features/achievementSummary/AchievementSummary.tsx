@@ -16,7 +16,7 @@ import CloseButton from "components/CloseButton";
 import { SFW_ACHIEVEMENTS, BOOTY_ACHIEVEMENTS } from "constants/achievements";
 
 import { useTheme } from "styled-components";
-import { StyledDrawer } from "./styled";
+import { StyledContainer } from "./styled";
 
 const AchievementSummary = () => {
   const isOpen = useAppSelector(isAchievementSummaryOpenSelector);
@@ -58,9 +58,9 @@ const AchievementSummary = () => {
   );
 
   const getRowColor = (rowNumber: number) => {
-    if (rowNumber === maxRows) return theme.colors.triple;
-    if (rowNumber === maxRows - 1) return theme.colors.double;
-    return theme.colors.single;
+    if (rowNumber === maxRows) return theme.colors.greatRating;
+    if (rowNumber === maxRows - 1) return theme.colors.goodRating;
+    return theme.colors.okRating;
   };
 
   const handleClose = () => {
@@ -68,7 +68,7 @@ const AchievementSummary = () => {
   };
 
   return (
-    <StyledDrawer $isOpen={isOpen}>
+    <StyledContainer $isOpen={isOpen}>
       <AchievementSummaryButton />
       <div>
         <ul>
@@ -108,7 +108,7 @@ const AchievementSummary = () => {
           size="small"
         />
       </div>
-    </StyledDrawer>
+    </StyledContainer>
   );
 };
 

@@ -2,13 +2,13 @@ import type { Theme } from "types/Theme";
 
 import styled, { css } from "styled-components";
 
-export const StyledDrawer = styled.div`
+export const StyledContainer = styled.div`
   ${({ $isOpen, theme }: { $isOpen: boolean; theme: Theme }) => css`
-    background-color: ${theme.colors.veryDark};
+    background-color: ${theme.colors.background};
     border-radius: ${theme.borderRadius};
-    color: ${theme.colors.veryLight};
+    color: ${theme.colors.primary};
     display: ${!$isOpen && "none"};
-    padding: ${theme.sizing.md};
+    padding: ${theme.spacing.md};
     position: absolute;
     right: 50%;
     top: 50%;

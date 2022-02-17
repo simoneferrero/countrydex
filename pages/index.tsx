@@ -8,7 +8,7 @@ import { isCountryListOpenSelector } from "features/countries/countriesSlice";
 import { fetchCountries } from "features/countries/async";
 
 import AchievementSummary from "features/achievementSummary/AchievementSummary";
-import CountryDrawer from "@/components/CountryDrawer";
+import CountryAchievements from "@/components/CountryAchievements";
 import CountryList from "@/components/CountryList";
 import Error from "@/components/Error";
 import Header from "@/components/Header";
@@ -44,7 +44,7 @@ const StyledContainer = styled.div`
 const StyledLoginPrompt = styled.div`
   align-items: center;
   background-color: rgba(0, 0, 0, 0.5);
-  color: ${({ theme }) => theme.colors.veryLight};
+  color: ${({ theme }) => theme.colors.primary};
   display: flex;
   height: 100%;
   justify-content: center;
@@ -81,7 +81,7 @@ const Home = () => {
         )}
         <CountryList />
         <AchievementSummary />
-        <CountryDrawer />
+        <CountryAchievements />
         <Loader />
         <Error />
       </main>

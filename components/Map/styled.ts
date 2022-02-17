@@ -17,7 +17,7 @@ export const StyledMapContainer = styled.div`
   position: relative;
 
   > h2 {
-    color: ${({ theme }) => theme.colors.veryDark};
+    color: ${({ theme }) => theme.colors.secondary};
     left: 50%;
     pointer-events: none;
     position: absolute;
@@ -62,19 +62,19 @@ const getGeographyFillValue = ({
   theme: Theme;
 }) => {
   if ($selectedCountryId === $id) {
-    return theme.colors.veryDark;
+    return theme.colors.secondary;
   }
   if (!$isBootyMode && $userCountryAchievements === 1) {
-    return theme.colors.single;
+    return theme.colors.okRating;
   }
   if ($userCountryAchievements === ($isBootyMode ? 1 : 2)) {
-    return theme.colors.double;
+    return theme.colors.goodRating;
   }
   if ($userCountryAchievements === ($isBootyMode ? 2 : 3)) {
-    return theme.colors.triple;
+    return theme.colors.greatRating;
   }
 
-  return theme.colors.medium;
+  return theme.colors.content;
 };
 
 const getOpacityValue = ({
@@ -92,11 +92,11 @@ export const StyledGeography = styled(Geography)`
     opacity: ${getOpacityValue};
     outline: none;
     stroke-width: 0.4;
-    stroke: ${theme.colors.veryLight};
+    stroke: ${theme.colors.primary};
     transition: ${theme.transition};
 
     &:hover {
-      fill: ${({ theme }) => theme.colors.veryDark};
+      fill: ${({ theme }) => theme.colors.secondary};
     }
   `}
 `;

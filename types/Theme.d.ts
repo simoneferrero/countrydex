@@ -7,7 +7,11 @@ export interface Theme {
     lg: string;
     xl: string;
   };
-  sizing: {
+  fontFamily: {
+    body: string;
+    header: string;
+  };
+  spacing: {
     xs: string;
     sm: string;
     md: string;
@@ -16,25 +20,15 @@ export interface Theme {
   };
   transition: string;
   colors: {
-    veryLight: string;
-    light: string;
-    medium: string;
-    dark: string;
-    veryDark: string;
-    single: string;
-    double: string;
-    triple: string;
+    primary: string;
+    secondary: string;
+    tertiary: string;
+    content: string;
+    background: string;
+    okRating: string;
+    goodRating: string;
+    greatRating: string;
     errorFont: string;
     errorBackground: string;
   };
 }
-
-/*
-primary
-secondary
-font
-background
-heading
-error
-errorBackground
-*/

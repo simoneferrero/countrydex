@@ -1,20 +1,20 @@
 import type { Theme } from "types/Theme";
 import styled, { css } from "styled-components";
 
-export const StyledDrawer = styled.div`
+export const StyledContainer = styled.div`
   ${({ $isOpen, theme }: { $isOpen: boolean; theme: Theme }) => css`
     grid-template-rows: min-content auto;
     height: 100%;
     overflow: hidden;
-    background-color: ${theme.colors.veryLight};
-    bottom: ${theme.sizing.xl};
-    color: ${theme.colors.veryDark};
+    background-color: ${theme.colors.primary};
+    bottom: ${theme.spacing.xl};
+    color: ${theme.colors.secondary};
     display: grid;
     height: 100%;
     justify-content: space-between;
     left: 0;
     margin-top: 4rem;
-    padding: ${theme.sizing.md};
+    padding: ${theme.spacing.md};
     position: absolute;
     top: 0;
     transition: left 0.5s ease-in-out;
@@ -22,9 +22,11 @@ export const StyledDrawer = styled.div`
     grid-template-columns: 100%;
 
     input {
+      border-color: ${theme.colors.background};
       border-radius: ${theme.borderRadius};
+      color: ${theme.colors.secondary};
       margin-bottom: 0.5rem;
-      padding: ${theme.sizing.xs} ${theme.sizing.sm};
+      padding: ${theme.spacing.xs} ${theme.spacing.sm};
       text-align: center;
       width: 100%;
     }
@@ -46,7 +48,7 @@ export const StyledDrawer = styled.div`
       width: 20rem;
       position: relative;
       margin-top: 0;
-      border-left: 1px solid ${theme.colors.veryDark};
+      border-left: 1px solid ${theme.colors.background};
       display: ${$isOpen ? "grid" : "none"};
     }
   `}
@@ -67,16 +69,16 @@ const getBackgroundColorValue = ({
     return "transparent";
   }
   if (!$isBootyMode && $userCountryAchievements === 1) {
-    return theme.colors.single;
+    return theme.colors.okRating;
   }
   if ($userCountryAchievements === ($isBootyMode ? 1 : 2)) {
-    return theme.colors.double;
+    return theme.colors.goodRating;
   }
   if ($userCountryAchievements === ($isBootyMode ? 2 : 3)) {
-    return theme.colors.triple;
+    return theme.colors.greatRating;
   }
 
-  return theme.colors.medium;
+  return theme.colors.content;
 };
 
 export const StyledCountryName = styled.li`
@@ -102,7 +104,7 @@ export const StyledCountryName = styled.li`
     cursor: pointer;
     display: flex;
     justify-content: center;
-    padding: ${theme.sizing.xs};
+    padding: ${theme.spacing.xs};
     width: 100%;
 
     &:hover {

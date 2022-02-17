@@ -5,16 +5,20 @@ import baseTheme from "./base";
 const sfwTheme: Theme = {
   ...baseTheme,
   colors: {
-    veryLight: "#e1d8c8",
-    light: "#dcba82",
-    medium: "#a88e63",
-    dark: "#5c5852",
-    veryDark: "#5c4d36",
-    single: "#dfb667",
-    double: "#a0a0a0",
-    triple: "#f2d732",
+    primary: "#ffeee6",
+    secondary: "#331100",
+    tertiary: "#802b00",
+    content: "#b33c00",
+    background: "#662200",
+    okRating: "#ff661a",
+    goodRating: "#ff884d",
+    greatRating: "#ffaa80",
     errorFont: "#fff",
     errorBackground: "#f44336",
+  },
+  fontFamily: {
+    body: '"Trebuchet MS", Helvetica, Verdana, sans-serif',
+    header: "Arial, Helvetica, Verdana, sans-serif",
   },
 };
 

@@ -7,10 +7,10 @@ const StyledErrorContainer = styled.div`
   ${({ theme }) => css`
     background-color: ${theme.colors.errorBackground};
     border-radius: 5px;
-    bottom: ${theme.sizing.xl};
+    bottom: ${theme.spacing.xl};
     color: ${theme.colors.errorFont};
     left: 50%;
-    padding: ${theme.sizing.xs} ${theme.sizing.md};
+    padding: ${theme.spacing.xs} ${theme.spacing.md};
     position: absolute;
     text-align: center;
     transform: translateX(-50%);

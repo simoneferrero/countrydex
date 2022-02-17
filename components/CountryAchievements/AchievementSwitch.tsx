@@ -7,10 +7,10 @@ import styled from "styled-components";
 const StyledLabel = styled.label`
   align-items: center;
   display: flex;
-  margin-bottom: ${({ theme }) => theme.sizing.md};
+  margin-bottom: ${({ theme }) => theme.spacing.md};
 
   span {
-    margin-left: ${({ theme }) => theme.sizing.lg};
+    margin-left: ${({ theme }) => theme.spacing.lg};
   }
 `;
 
@@ -37,11 +37,11 @@ const AchievementSwitch = ({
           disabled={disabled}
           handleDiameter={24}
           height={24}
-          offColor={theme.colors.medium}
-          offHandleColor={theme.colors.veryLight}
+          offColor={theme.colors.content}
+          offHandleColor={theme.colors.primary}
           onChange={onChange}
-          onColor={theme.colors.light}
-          onHandleColor={theme.colors.veryLight}
+          onColor={theme.colors.tertiary}
+          onHandleColor={theme.colors.primary}
           width={56}
         />
         <span>{labelText}</span>

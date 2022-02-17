@@ -40,11 +40,11 @@ const Header = () => {
             aria-label="Booty Mode Toggle"
             checked={isBootyMode}
             checkedIcon={<StyledIconContainer>💖</StyledIconContainer>}
-            offColor={theme.colors.medium}
-            offHandleColor={theme.colors.veryLight}
+            offColor={theme.colors.content}
+            offHandleColor={theme.colors.primary}
             onChange={handleChange}
-            onColor={theme.colors.light}
-            onHandleColor={theme.colors.veryLight}
+            onColor={theme.colors.tertiary}
+            onHandleColor={theme.colors.primary}
             uncheckedIcon={<StyledIconContainer>☀️</StyledIconContainer>}
           />
           <StyledGreeting>

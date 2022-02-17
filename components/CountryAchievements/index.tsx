@@ -19,9 +19,9 @@ import CloseButton from "components/CloseButton";
 
 import { SFW_ACHIEVEMENTS, BOOTY_ACHIEVEMENTS } from "constants/achievements";
 
-import { StyledDrawer } from "./styled";
+import { StyledContainer } from "./styled";
 
-const CountryDrawer = () => {
+const CountryAchievements = () => {
   const { user } = useUser();
   const isBootyMode = useAppSelector(isBootyModeSelector);
   const selectedCountry = useAppSelector(selectedCountrySelector);
@@ -63,7 +63,7 @@ const CountryDrawer = () => {
   const bootyAchievementList = getAchievementList(BOOTY_ACHIEVEMENTS);
 
   return (
-    <StyledDrawer $isOpen={!!selectedCountry}>
+    <StyledContainer $isOpen={!!selectedCountry}>
       <div>
         <h3>{selectedCountry?.NAME ?? "No country selected"}</h3>
         <form>{isBootyMode ? bootyAchievementList : sfwAchievementList}</form>
@@ -72,8 +72,8 @@ const CountryDrawer = () => {
           onClick={() => dispatch(setSelectedCountryId(""))}
         />
       </div>
-    </StyledDrawer>
+    </StyledContainer>
   );
 };
 
-export default CountryDrawer;
+export default CountryAchievements;

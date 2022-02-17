@@ -2,18 +2,18 @@ import type { Theme } from "types/Theme";
 
 import styled, { css } from "styled-components";
 
-export const StyledDrawer = styled.div`
+export const StyledContainer = styled.div`
   ${({ $isOpen, theme }: { $isOpen: boolean; theme: Theme }) => css`
-    bottom: ${theme.sizing.xl};
-    left: ${theme.sizing.md};
+    bottom: ${theme.spacing.xl};
+    left: ${theme.spacing.md};
     position: absolute;
 
     > div {
-      background-color: ${theme.colors.veryDark};
+      background-color: ${theme.colors.background};
       border-radius: ${theme.borderRadius};
-      color: ${theme.colors.veryLight};
+      color: ${theme.colors.primary};
       opacity: ${$isOpen ? 1 : 0};
-      padding: ${theme.sizing.md};
+      padding: ${theme.spacing.md};
       position: relative;
       transition: ${theme.transition};
       visibility: ${$isOpen ? "visible" : "hidden"};
@@ -31,14 +31,14 @@ export const StyledDrawer = styled.div`
           justify-content: space-between;
 
           & > span:nth-child(2) {
-            margin-left: ${theme.sizing.xs};
+            margin-left: ${theme.spacing.xs};
           }
         }
       }
     }
 
     @media (min-width: ${theme.breakpoints.md}) {
-      left: ${theme.sizing.xl};
+      left: ${theme.spacing.xl};
     }
   `}
 `;

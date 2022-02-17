@@ -15,28 +15,28 @@ import styled, { css } from "styled-components";
 export const StyledOpenButton = styled.button`
   ${({ $isOpen, theme }: { $isOpen: boolean; theme: Theme }) => css`
     align-items: center;
-    background: ${$isOpen ? "transparent" : theme.colors.veryDark};
+    background: ${$isOpen ? "transparent" : theme.colors.background};
     border-radius: 50%;
     border: none;
-    color: ${$isOpen ? theme.colors.veryDark : theme.colors.veryLight};
+    color: ${$isOpen ? theme.colors.background : theme.colors.primary};
     cursor: pointer;
     display: none;
     font: inherit;
     height: 3rem;
     justify-content: center;
     outline: inherit;
-    padding: ${theme.sizing.xs};
+    padding: ${theme.spacing.xs};
     position: absolute;
-    right: ${$isOpen ? theme.sizing.sm : theme.sizing.xl};
-    top: ${$isOpen ? theme.sizing.sm : theme.sizing.xl};
+    right: ${$isOpen ? theme.spacing.sm : theme.spacing.xl};
+    top: ${$isOpen ? theme.spacing.sm : theme.spacing.xl};
     width: 3rem;
 
     &:hover {
-      background: ${$isOpen ? "transparent" : theme.colors.medium};
+      background: ${$isOpen ? "transparent" : theme.colors.tertiary};
     }
 
     svg {
-      stroke: ${$isOpen ? theme.colors.veryDark : theme.colors.veryLight};
+      stroke: ${$isOpen ? theme.colors.secondary : theme.colors.primary};
     }
 
     @media (min-width: ${theme.breakpoints.lg}) {

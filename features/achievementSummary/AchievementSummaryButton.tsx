@@ -13,11 +13,11 @@ import styled, { css } from "styled-components";
 export const StyledButton = styled.button`
   ${({ $isOpen, theme }: { $isOpen: boolean; theme: Theme }) => css`
     align-items: center;
-    background: ${theme.colors.veryDark};
+    background: ${theme.colors.background};
     border-radius: 50%;
     border: none;
     bottom: 0;
-    color: ${theme.colors.veryLight};
+    color: ${theme.colors.primary};
     cursor: pointer;
     display: flex;
     font: inherit;
@@ -26,17 +26,17 @@ export const StyledButton = styled.button`
     left: 0;
     opacity: ${!$isOpen ? 1 : 0};
     outline: inherit;
-    padding: ${theme.sizing.xs};
+    padding: ${theme.spacing.xs};
     position: absolute;
     visibility: ${!$isOpen ? "visible" : "hidden"};
     width: 3rem;
 
     &:hover {
-      background: ${theme.colors.medium};
+      background: ${theme.colors.tertiary};
     }
 
     path {
-      fill: ${theme.colors.veryLight};
+      fill: ${theme.colors.primary};
     }
   `};
 `;

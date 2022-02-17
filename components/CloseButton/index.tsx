@@ -8,11 +8,11 @@ export const StyledButton = styled.button`
   ${({ $size, theme }: { $size: "small" | "large"; theme: Theme }) => css`
     background: none;
     border: none;
-    color: ${theme.colors.veryDark};
+    color: ${theme.colors.background};
     cursor: pointer;
     font: inherit;
     outline: inherit;
-    padding: ${theme.sizing.xs};
+    padding: ${theme.spacing.xs};
     position: absolute;
     right: ${$size === "large" ? "-3.5rem" : "-2rem"};
     top: ${$size === "large" ? "-3.5rem" : "-2rem"};

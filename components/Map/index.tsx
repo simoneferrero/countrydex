@@ -37,10 +37,10 @@ const Map = () => {
             <Sphere
               fill="transparent"
               id="rsm-sphere"
-              stroke={theme.colors.veryDark}
+              stroke={theme.colors.secondary}
               strokeWidth={0.3}
             />
-            <Graticule stroke={theme.colors.veryDark} strokeWidth={0.3} />
+            <Graticule stroke={theme.colors.secondary} strokeWidth={0.3} />
             <Geographies geography={GEO_URL}>
               {({ geographies }: { geographies: Geography[] }) =>
                 geographies.map((geo) => (

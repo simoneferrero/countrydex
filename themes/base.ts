@@ -7,7 +7,7 @@ const baseTheme = {
     lg: "1200px",
     xl: "1600px",
   },
-  sizing: {
+  spacing: {
     xs: "0.5rem",
     sm: "0.75rem",
     md: "1rem",
