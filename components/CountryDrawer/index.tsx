@@ -14,13 +14,12 @@ import {
   deleteCountryAchievement,
 } from "features/countries/async";
 
-import { MdClose } from "react-icons/md";
-
 import AchievementSwitch from "./AchievementSwitch";
+import CloseButton from "components/CloseButton";
 
 import { SFW_ACHIEVEMENTS, BOOTY_ACHIEVEMENTS } from "constants/achievements";
 
-import { StyledButton, StyledDrawer } from "./styled";
+import { StyledDrawer } from "./styled";
 
 const CountryDrawer = () => {
   const { user } = useUser();
@@ -64,16 +63,14 @@ const CountryDrawer = () => {
   const bootyAchievementList = getAchievementList(BOOTY_ACHIEVEMENTS);
 
   return (
-    <StyledDrawer isOpen={!!selectedCountry}>
+    <StyledDrawer $isOpen={!!selectedCountry}>
       <div>
         <h3>{selectedCountry?.NAME ?? "No country selected"}</h3>
         <form>{isBootyMode ? bootyAchievementList : sfwAchievementList}</form>
-        <StyledButton
-          aria-label="Close Country drawer"
+        <CloseButton
+          labelText="Close Country drawer"
           onClick={() => dispatch(setSelectedCountryId(""))}
-        >
-          <MdClose size={40} />
-        </StyledButton>
+        />
       </div>
     </StyledDrawer>
   );

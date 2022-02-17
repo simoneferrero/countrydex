@@ -3,22 +3,26 @@ import { useUser } from "@auth0/nextjs-auth0";
 
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import {
+  isAchievementSummaryOpenSelector,
   changeAchievementSummaryStatus,
-  selectIsAchievementSummaryOpen,
 } from "./achievementSummarySlice";
 import { countriesSelectors } from "features/countries/countriesSlice";
 import { isBootyModeSelector } from "features/theme/themeSlice";
 
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
+import AchievementSummaryButton from "./AchievementSummaryButton";
+import CloseButton from "components/CloseButton";
 
 import { SFW_ACHIEVEMENTS, BOOTY_ACHIEVEMENTS } from "constants/achievements";
 
-import { StyledButton, StyledDrawer } from "./styled";
+import { useTheme } from "styled-components";
+import { StyledDrawer } from "./styled";
 
 const AchievementSummary = () => {
-  const isOpen = useAppSelector(selectIsAchievementSummaryOpen);
+  const isOpen = useAppSelector(isAchievementSummaryOpenSelector);
   const isBootyMode = useAppSelector(isBootyModeSelector);
   const { user } = useUser();
+  const theme = useTheme();
   const dispatch = useAppDispatch();
 
   const numberOfCountries = useAppSelector(countriesSelectors.selectTotal);
@@ -53,13 +57,27 @@ const AchievementSummary = () => {
     {}
   );
 
+  const getRowColor = (rowNumber: number) => {
+    if (rowNumber === maxRows) return theme.colors.triple;
+    if (rowNumber === maxRows - 1) return theme.colors.double;
+    return theme.colors.single;
+  };
+
+  const handleClose = () => {
+    dispatch(changeAchievementSummaryStatus(false));
+  };
+
   return (
     <StyledDrawer $isOpen={isOpen}>
+      <AchievementSummaryButton />
       <div>
         <ul>
           {Array.from(Array(maxRows + 1).keys(), (rowNumber) => {
             const fullStars = Array.from(Array(rowNumber).keys(), (key) => (
-              <AiFillStar key={`fullStar-${key}`} />
+              <AiFillStar
+                fill={getRowColor(rowNumber)}
+                key={`fullStar-${key}`}
+              />
             ));
             const emptyStars = Array.from(
               Array(maxRows - rowNumber).keys(),
@@ -75,18 +93,21 @@ const AchievementSummary = () => {
 
             return (
               <li key={rowNumber}>
-                {[...fullStars, ...emptyStars]}: {achievements}/
-                {numberOfCountries}
+                <span>{[...fullStars, ...emptyStars]}:</span>
+
+                <span>
+                  {achievements}/{numberOfCountries}
+                </span>
               </li>
             );
           })}
         </ul>
+        <CloseButton
+          labelText="Close Achievement Summary"
+          onClick={handleClose}
+          size="small"
+        />
       </div>
-      <StyledButton>
-        <h3 onClick={() => dispatch(changeAchievementSummaryStatus(!isOpen))}>
-          Totals
-        </h3>
-      </StyledButton>
     </StyledDrawer>
   );
 };

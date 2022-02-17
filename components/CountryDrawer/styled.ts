@@ -3,28 +3,19 @@ import type { Theme } from "types/Theme";
 import styled, { css } from "styled-components";
 
 export const StyledDrawer = styled.div`
-  ${({ isOpen, theme }: { isOpen: boolean; theme: Theme }) => css`
+  ${({ $isOpen, theme }: { $isOpen: boolean; theme: Theme }) => css`
     background-color: ${theme.colors["very-dark"]};
     border-radius: ${theme.borderRadius};
     color: ${theme.colors["very-light"]};
-    opacity: ${isOpen ? 1 : 0};
+    opacity: ${$isOpen ? 1 : 0};
     padding: ${theme.sizing.md};
     position: absolute;
     right: 50%;
     top: 50%;
     transform: translate(50%, -20%);
     transition: ${theme.transition};
-    visibility: ${isOpen ? "visible" : "hidden"};
+    visibility: ${$isOpen ? "visible" : "hidden"};
     width: 75%;
-
-    @media (min-width: ${theme.breakpoints.md}) {
-      min-width: fit-content;
-      width: 30rem;
-
-      & span {
-        white-space: nowrap;
-      }
-    }
 
     > div {
       position: relative;
@@ -34,18 +25,14 @@ export const StyledDrawer = styled.div`
       margin: 0;
       margin-bottom: 1rem;
     }
-  `}
-`;
 
-export const StyledButton = styled.button`
-  background: none;
-  border: none;
-  color: ${({ theme }) => theme.colors["very-dark"]};
-  cursor: pointer;
-  font: inherit;
-  outline: inherit;
-  padding: ${({ theme }) => theme.sizing.xs};
-  position: absolute;
-  top: -3.5rem;
-  right: -3.5rem;
+    @media (min-width: ${theme.breakpoints.md}) {
+      min-width: fit-content;
+      width: 30rem;
+
+      & span {
+        white-space: nowrap;
+      }
+    }
+  `}
 `;

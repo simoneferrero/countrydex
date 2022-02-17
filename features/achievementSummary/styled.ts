@@ -1,40 +1,45 @@
-import styled from "styled-components";
+import type { Theme } from "types/Theme";
+
+import styled, { css } from "styled-components";
 
 export const StyledDrawer = styled.div`
-  background-color: ${({ theme }) => theme.colors["very-dark"]};
-  color: ${({ theme }) => theme.colors["very-light"]};
-  display: flex;
-  justify-content: space-between;
-  left: ${({ $isOpen }: { $isOpen: boolean }) => ($isOpen ? "0" : "-9.5rem")};
-  padding: 1rem;
-  position: absolute;
-  top: 4.5rem;
-  transition: left 0.5s ease-in-out;
-  width: 13rem;
+  ${({ $isOpen, theme }: { $isOpen: boolean; theme: Theme }) => css`
+    left: ${theme.sizing.md};
+    position: absolute;
+    top: 5.5rem;
 
-  ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    text-align: left;
+    > div {
+      background-color: ${theme.colors["very-dark"]};
+      border-radius: ${theme.borderRadius};
+      color: ${theme.colors["very-light"]};
+      opacity: ${$isOpen ? 1 : 0};
+      padding: ${theme.sizing.md};
+      position: relative;
+      transition: ${theme.transition};
+      visibility: ${$isOpen ? "visible" : "hidden"};
+      width: fit-content;
 
-    li {
-      display: flex;
-      align-items: center;
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        text-align: left;
+
+        li {
+          align-items: center;
+          display: flex;
+          justify-content: space-between;
+
+          & > span:nth-child(2) {
+            margin-left: ${theme.sizing.xs};
+          }
+        }
+      }
     }
-  }
-`;
 
-export const StyledButton = styled.a`
-  align-self: center;
-  cursor: pointer;
-  font-style: normal;
-  height: fit-content;
-  justify-self: flex-end;
-  transform: rotate(-90deg);
-
-  h3 {
-    margin: 0;
-    margin-top: 1rem;
-  }
+    @media (min-width: ${theme.breakpoints.md}) {
+      left: ${theme.sizing.xl};
+      top: 6rem;
+    }
+  `}
 `;

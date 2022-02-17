@@ -22,7 +22,7 @@ export const achievementSummarySlice = createSlice({
 export const { changeAchievementSummaryStatus } =
   achievementSummarySlice.actions;
 
-export const selectIsAchievementSummaryOpen = (state: RootState) =>
+export const isAchievementSummaryOpenSelector = (state: RootState) =>
   state.achievementSummary.isOpen;
 
 export default achievementSummarySlice.reducer;
