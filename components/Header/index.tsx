@@ -2,7 +2,7 @@
 import { useUser } from "@auth0/nextjs-auth0";
 
 import { useAppSelector, useAppDispatch } from "app/hooks";
-import { changeTheme, selectIsBootyMode } from "features/theme/themeSlice";
+import { changeTheme, isBootyModeSelector } from "features/theme/themeSlice";
 
 import Switch from "react-switch";
 import { FiLogIn, FiLogOut } from "react-icons/fi";
@@ -21,7 +21,7 @@ const LOG_IN_URL = "/api/auth/login";
 const LOG_OUT_URL = "/api/auth/logout";
 
 const Header = () => {
-  const isBootyMode = useAppSelector(selectIsBootyMode);
+  const isBootyMode = useAppSelector(isBootyModeSelector);
   const dispatch = useAppDispatch();
   const theme = useTheme();
   const { user } = useUser();

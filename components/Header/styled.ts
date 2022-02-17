@@ -1,28 +1,30 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const StyledHeader = styled.header`
-  align-items: center;
-  background-color: ${({ theme }) => theme.colors.dark};
-  color: ${({ theme }) => theme.colors["very-light"]};
-  display: flex;
-  height: 4rem;
-  justify-content: space-between;
-  left: 0;
-  padding: 0 ${({ theme }) => theme.sizing.md};
-  position: fixed;
-  top: 0;
-  transition: ${({ theme }) => theme.transition};
-  width: 100%;
-  z-index: 1;
+  ${({ theme }) => css`
+    align-items: center;
+    background-color: ${theme.colors.dark};
+    color: ${theme.colors["very-light"]};
+    display: flex;
+    height: 4rem;
+    justify-content: space-between;
+    left: 0;
+    padding: 0 ${theme.sizing.md};
+    position: fixed;
+    top: 0;
+    transition: ${theme.transition};
+    width: 100%;
+    z-index: 1;
 
-  h1 {
-    margin: 0;
-    margin-right: ${({ theme }) => theme.sizing.md};
-  }
+    h1 {
+      margin: 0;
+      margin-right: ${theme.sizing.md};
+    }
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    padding: 0 ${({ theme }) => theme.sizing.xl};
-  }
+    @media (min-width: ${theme.breakpoints.md}) {
+      padding: 0 ${theme.sizing.xl};
+    }
+  `}
 `;
 
 export const StyledIconContainer = styled.div`
@@ -34,14 +36,16 @@ export const StyledIconContainer = styled.div`
 `;
 
 export const StyledActionContainer = styled.div`
-  align-items: center;
-  display: grid;
-  grid-column-gap: ${({ theme }) => theme.sizing.md};
-  grid-template-columns: auto auto;
+  ${({ theme }) => css`
+    align-items: center;
+    display: grid;
+    grid-column-gap: ${theme.sizing.md};
+    grid-template-columns: auto auto;
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.sm}) {
-    grid-column-gap: ${({ theme }) => theme.sizing.xl};
-  }
+    @media (min-width: ${theme.breakpoints.sm}) {
+      grid-column-gap: ${theme.sizing.xl};
+    }
+  `}
 `;
 
 export const StyledGreeting = styled.div`

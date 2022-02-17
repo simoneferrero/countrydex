@@ -1,4 +1,5 @@
 export interface Theme {
+  borderRadius: string;
   breakpoints: {
     xs: string;
     sm: string;

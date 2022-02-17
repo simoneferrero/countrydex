@@ -1,29 +1,51 @@
-import styled from "styled-components";
+import type { Theme } from "types/Theme";
+
+import styled, { css } from "styled-components";
 
 export const StyledDrawer = styled.div`
-  background-color: ${({ theme }) => theme.colors["very-dark"]};
-  color: ${({ theme }) => theme.colors["very-light"]};
-  padding: 1rem;
-  position: absolute;
-  right: ${({ isOpen }: { isOpen: boolean }) => (isOpen ? "0" : "-20rem")};
-  top: 6rem;
-  transition: right 0.5s ease-in-out;
-  width: 20rem;
+  ${({ isOpen, theme }: { isOpen: boolean; theme: Theme }) => css`
+    background-color: ${theme.colors["very-dark"]};
+    border-radius: ${theme.borderRadius};
+    color: ${theme.colors["very-light"]};
+    opacity: ${isOpen ? 1 : 0};
+    padding: ${theme.sizing.md};
+    position: absolute;
+    right: 50%;
+    top: 50%;
+    transform: translate(50%, -20%);
+    transition: ${theme.transition};
+    visibility: ${isOpen ? "visible" : "hidden"};
+    width: 75%;
 
-  h3 {
-    margin: 0;
-    margin-bottom: 1rem;
-  }
+    @media (min-width: ${theme.breakpoints.md}) {
+      min-width: fit-content;
+      width: 30rem;
+
+      & span {
+        white-space: nowrap;
+      }
+    }
+
+    > div {
+      position: relative;
+    }
+
+    h3 {
+      margin: 0;
+      margin-bottom: 1rem;
+    }
+  `}
 `;
 
 export const StyledButton = styled.button`
   background: none;
-  border-radius: 4px;
-  border: 2px solid ${({ theme }) => theme.colors["very-light"]};
-  color: ${({ theme }) => theme.colors["very-light"]};
+  border: none;
+  color: ${({ theme }) => theme.colors["very-dark"]};
   cursor: pointer;
   font: inherit;
-  font-weight: 700;
   outline: inherit;
-  padding: 4px 8px;
+  padding: ${({ theme }) => theme.sizing.xs};
+  position: absolute;
+  top: -3.5rem;
+  right: -3.5rem;
 `;

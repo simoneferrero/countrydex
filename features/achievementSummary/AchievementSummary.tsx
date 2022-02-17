@@ -7,7 +7,7 @@ import {
   selectIsAchievementSummaryOpen,
 } from "./achievementSummarySlice";
 import { countriesSelectors } from "features/countries/countriesSlice";
-import { selectIsBootyMode } from "features/theme/themeSlice";
+import { isBootyModeSelector } from "features/theme/themeSlice";
 
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 
@@ -17,7 +17,7 @@ import { StyledButton, StyledDrawer } from "./styled";
 
 const AchievementSummary = () => {
   const isOpen = useAppSelector(selectIsAchievementSummaryOpen);
-  const isBootyMode = useAppSelector(selectIsBootyMode);
+  const isBootyMode = useAppSelector(isBootyModeSelector);
   const { user } = useUser();
   const dispatch = useAppDispatch();
 

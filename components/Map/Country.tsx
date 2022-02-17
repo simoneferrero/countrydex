@@ -8,7 +8,7 @@ import {
   setSelectedCountryId,
   selectedCountryIdSelector,
 } from "features/countries/countriesSlice";
-import { selectIsBootyMode } from "features/theme/themeSlice";
+import { isBootyModeSelector } from "features/theme/themeSlice";
 
 import { SFW_ACHIEVEMENTS, BOOTY_ACHIEVEMENTS } from "constants/achievements";
 
@@ -20,7 +20,7 @@ interface Props {
 }
 
 const Country = ({ geo, setHoveredCountry }: Props) => {
-  const isBootyMode = useAppSelector(selectIsBootyMode);
+  const isBootyMode = useAppSelector(isBootyModeSelector);
   const selectedCountryId = useAppSelector(selectedCountryIdSelector);
   const { properties } = geo;
   const countryId = properties.ISO_A3;

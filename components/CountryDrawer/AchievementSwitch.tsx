@@ -7,10 +7,10 @@ import styled from "styled-components";
 const StyledLabel = styled.label`
   align-items: center;
   display: flex;
-  margin-bottom: 1rem;
+  margin-bottom: ${({ theme }) => theme.sizing.md};
 
   span {
-    margin-left: 1rem;
+    margin-left: ${({ theme }) => theme.sizing.lg};
   }
 `;
 

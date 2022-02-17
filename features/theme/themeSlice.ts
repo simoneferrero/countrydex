@@ -21,7 +21,7 @@ export const themeSlice = createSlice({
 
 export const { changeTheme } = themeSlice.actions;
 
-export const selectIsBootyMode = (state: RootState) =>
+export const isBootyModeSelector = (state: RootState) =>
   state.theme.current === "booty";
 
 export default themeSlice.reducer;

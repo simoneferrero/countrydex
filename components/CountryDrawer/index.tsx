@@ -8,11 +8,13 @@ import {
   selectedCountrySelector,
   setSelectedCountryId,
 } from "features/countries/countriesSlice";
-import { selectIsBootyMode } from "features/theme/themeSlice";
+import { isBootyModeSelector } from "features/theme/themeSlice";
 import {
   addCountryAchievement,
   deleteCountryAchievement,
 } from "features/countries/async";
+
+import { MdClose } from "react-icons/md";
 
 import AchievementSwitch from "./AchievementSwitch";
 
@@ -22,7 +24,7 @@ import { StyledButton, StyledDrawer } from "./styled";
 
 const CountryDrawer = () => {
   const { user } = useUser();
-  const isBootyMode = useAppSelector(selectIsBootyMode);
+  const isBootyMode = useAppSelector(isBootyModeSelector);
   const selectedCountry = useAppSelector(selectedCountrySelector);
   const isLoading = useAppSelector(isLoadingSelector);
   const dispatch = useAppDispatch();
@@ -63,11 +65,16 @@ const CountryDrawer = () => {
 
   return (
     <StyledDrawer isOpen={!!selectedCountry}>
-      <h3>{selectedCountry?.NAME ?? "No country selected"}</h3>
-      <form>{isBootyMode ? bootyAchievementList : sfwAchievementList}</form>
-      <StyledButton onClick={() => dispatch(setSelectedCountryId(""))}>
-        <span>Close &gt;</span>
-      </StyledButton>
+      <div>
+        <h3>{selectedCountry?.NAME ?? "No country selected"}</h3>
+        <form>{isBootyMode ? bootyAchievementList : sfwAchievementList}</form>
+        <StyledButton
+          aria-label="Close Country drawer"
+          onClick={() => dispatch(setSelectedCountryId(""))}
+        >
+          <MdClose size={40} />
+        </StyledButton>
+      </div>
     </StyledDrawer>
   );
 };

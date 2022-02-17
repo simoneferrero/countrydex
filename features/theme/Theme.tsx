@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { useAppSelector } from "app/hooks";
-import { selectIsBootyMode } from "./themeSlice";
+import { isBootyModeSelector } from "./themeSlice";
 
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 
@@ -38,7 +38,7 @@ const AppTheme = ({ children }: { children: React.ReactNode }) => {
   const [height, setHeight] = useState(
     typeof window !== "undefined" ? window.innerHeight + "px" : "100vh"
   );
-  const isBootyMode = useAppSelector(selectIsBootyMode);
+  const isBootyMode = useAppSelector(isBootyModeSelector);
 
   if (typeof window !== "undefined") {
     window.onresize = () => setHeight(window.innerHeight + "px");

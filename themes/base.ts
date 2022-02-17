@@ -1,4 +1,5 @@
 const baseTheme = {
+  borderRadius: "8px",
   breakpoints: {
     xs: "0px",
     sm: "600px",
